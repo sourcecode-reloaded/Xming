@@ -1,0 +1,81 @@
+XCOMM $XdotOrg: xc/fonts/encodings/Imakefile,v 1.3 2004/10/18 14:21:44 eich Exp $
+XCOMM $XFree86: xc/fonts/encodings/Imakefile,v 1.10 2003/06/26 10:19:41 eich Exp $
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = large
+
+OBJS = EncObjComp(adobe-dingbats) EncObjComp(adobe-standard) \
+	EncObjComp(adobe-symbol) \
+	EncObjComp(ansi-1251) \
+	EncObjComp(armscii-8) \
+	EncObjComp(ascii-0) \
+	EncObjComp(dec-special) \
+	EncObjComp(ibm-cp437) EncObjComp(ibm-cp850) \
+	EncObjComp(ibm-cp852) EncObjComp(ibm-cp866) \
+	EncObjComp(iso8859-6.16) EncObjComp(iso8859-6.8x) \
+	EncObjComp(iso8859-11) EncObjComp(iso8859-13) \
+	EncObjComp(iso8859-16) \
+	EncObjComp(suneu-greek) \
+	EncObjComp(microsoft-cp1250) EncObjComp(microsoft-cp1251) \
+	EncObjComp(microsoft-cp1252) EncObjComp(microsoft-cp1253) \
+	EncObjComp(microsoft-cp1254) EncObjComp(microsoft-cp1255) \
+	EncObjComp(microsoft-cp1256) EncObjComp(microsoft-cp1257) \
+	EncObjComp(microsoft-cp1258) EncObjComp(microsoft-win3.1) \
+	EncObjComp(mulearabic-0) EncObjComp(mulearabic-1) \
+	EncObjComp(mulearabic-2) EncObjComp(mulelao-1) \
+	EncObjComp(tcvn-0) EncObjComp(tis620-2) EncObjComp(viscii1.1-1)
+
+DONES = large/DONE
+
+#if HasParallelMake
+MakeMutex($(SUBDIRS) $(DONES))
+#endif
+
+#if HasGnuMake || HasBsdMake
+$(DONES): $(SUBDIRS)
+#endif
+
+MakeEncodings($(SUBDIRS) $(DONES),$(ENCODINGSDIR),. large)
+
+CompEncodingTarget(adobe-dingbats)
+CompEncodingTarget(adobe-standard)
+CompEncodingTarget(adobe-symbol)
+CompEncodingTarget(ansi-1251)
+CompEncodingTarget(armscii-8) 
+CompEncodingTarget(ascii-0) 
+CompEncodingTarget(dec-special) 
+CompEncodingTarget(ibm-cp437) 
+CompEncodingTarget(ibm-cp850) 
+CompEncodingTarget(ibm-cp852) 
+CompEncodingTarget(ibm-cp866) 
+CompEncodingTarget(iso8859-6.16) 
+CompEncodingTarget(iso8859-6.8x) 
+CompEncodingTarget(iso8859-11) 
+CompEncodingTarget(iso8859-13) 
+CompEncodingTarget(iso8859-16) 
+CompEncodingTarget(suneu-greek)
+CompEncodingTarget(microsoft-cp1250) 
+CompEncodingTarget(microsoft-cp1251) 
+CompEncodingTarget(microsoft-cp1252) 
+CompEncodingTarget(microsoft-cp1253) 
+CompEncodingTarget(microsoft-cp1254) 
+CompEncodingTarget(microsoft-cp1255) 
+CompEncodingTarget(microsoft-cp1256) 
+CompEncodingTarget(microsoft-cp1257) 
+CompEncodingTarget(microsoft-cp1258) 
+CompEncodingTarget(microsoft-win3.1) 
+CompEncodingTarget(mulearabic-0) 
+CompEncodingTarget(mulearabic-1) 
+CompEncodingTarget(mulearabic-2) 
+CompEncodingTarget(mulelao-1) 
+CompEncodingTarget(tcvn-0) 
+CompEncodingTarget(tis620-2) 
+CompEncodingTarget(viscii1.1-1)
+
+InstallEncodings($(ENCODINGSDIR))
+
+ForceSubdirs($(SUBDIRS))
+
+DependSubdirs($(SUBDIRS))

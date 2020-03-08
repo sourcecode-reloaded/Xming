@@ -1,0 +1,19 @@
+XCOMM $Xorg: Imakefile,v 1.1 2004/05/09 07:54:52 gisburn Exp $
+
+        DEPLIBS = XawClientDepLibs XkbClientDepLibs
+LOCAL_LIBRARIES = -lXprintUtil $(XPLIB) XawClientLibs XkbClientLibs
+           SRCS = xmore.c print.c printdialog.c
+           OBJS = xmore.o print.o printdialog.o
+        HEADERS =
+    CDEBUGFLAGS = -g
+        DEFINES = -DXMORE -DUSE_XPRINT
+
+ComplexProgramTarget(xmore)
+InstallAppDefaults(XMore)
+
+#ifdef HasDocBookTools
+all:: xmore.man xmore.html
+
+ConvertDocBookToManPage(xmore.sgml, xmore.man)
+ConvertDocBookToHTML(xmore.sgml, xmore.html)
+#endif /* HasDocBookTools */

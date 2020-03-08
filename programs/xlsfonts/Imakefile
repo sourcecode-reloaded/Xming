@@ -1,0 +1,26 @@
+XCOMM $Xorg: Imakefile,v 1.3 2000/08/17 19:54:53 cpqbld Exp $
+
+#if BuildXprintLib && BuildXprintClients
+#  define XlsFontsUseXprint YES
+#endif /* BuildXprintLib && BuildXprintClients */
+
+#if XlsFontsUseXprint
+     PRINT_LIBS = -lXprintUtil $(XPLIB)
+     PRINT_DEFS = -DBUILD_PRINTSUPPORT
+#endif /* XlsFontsUseXprint */
+
+
+        DEPLIBS = $(DEPXONLYLIB)
+LOCAL_LIBRARIES = $(PRINT_LIBS) $(XLIB)
+        DEFINES = $(PRINT_DEFS)
+           SRCS = xlsfonts.c dsimple.c
+           OBJS = xlsfonts.o dsimple.o
+
+ComplexProgramTarget(xlsfonts)
+
+#ifdef HasDocBookTools
+all:: xlsfonts.man xlsfonts.html
+
+ConvertDocBookToManPage(xlsfonts.sgml, xlsfonts.man)
+ConvertDocBookToHTML(xlsfonts.sgml, xlsfonts.html)
+#endif /* HasDocBookTools */

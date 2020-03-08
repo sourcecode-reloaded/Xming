@@ -1,0 +1,15 @@
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/xaa/msb_first/Imakefile,v 1.2 1998/07/25 16:59:12 dawes Exp $
+
+#define LinkDirectory ..
+#define EXPDEFINES -DMSBFIRST
+#define EXPOBJECTNAME msb_first
+
+XCOMM
+XCOMM To enable the assembly code GlyphRenderes uncomment the lines below
+XCOMM
+XCOMM #if defined(i386Architecture) && !MakeDllModules 
+XCOMM #define UseAssembler
+XCOMM #define EXPDEFINES -DMSBFIRST -DUSEASSEMBLER
+XCOMM #endif
+
+#include "../Imakefile.EXP"

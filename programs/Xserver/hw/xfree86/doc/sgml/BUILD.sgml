@@ -1,0 +1,444 @@
+<!DOCTYPE linuxdoc PUBLIC "-//Xorg//DTD linuxdoc//EN" [
+<!ENTITY % defs SYSTEM "defs.ent"> %defs;
+]>
+
+<article>
+<title>Building the X Window System 
+from the 
+X.Org Monolithic Source Distribution
+<author>Jim Gettys and Keith Packard (for X11R&relvers;)
+<and>David Dawes and Matthieu Herrb (for XFree86 4.4 RC2)
+<Date>&reldate;
+
+<ident>
+$Id: BUILD.sgml,v 1.10 2005/12/21 00:45:27 alanc Exp $ 
+</ident>
+
+<abstract>
+This document describes how to build the X Window System from the 
+X.Org monolithic <bf>source</bf>
+distribution and is designed to
+be used in conjunction with the operating system (OS) specific README files.
+</abstract>
+
+<toc>
+
+<p>
+<quote>
+<bf/NOTE:/  Refer to the appropriate OS-specific README file in xc/programs/Xserver/hw/xfree86/doc before attempting
+       to build the X distribution.  These files often contain additional information that 
+       you need to successfully build for your OS.
+</quote>
+
+We highly recommend using gcc to build the X distribution, but X also
+generally builds with the native compiler for each OS platform; 
+The build tools known to be required include: gcc, make, C library development
+package, bison, flex, ncurses (development package), and Perl.
+
+<p>
+The monolithic tree also includes copies of some packages maintained outside 
+the X.Org project for convenience in building on machines that do not already
+have them installed.   These include FreeType 2, fontconfig, expat, xterm,
+and zlib.   For most uses however, it is recommended that you install the
+latest version directly from the main distribution site, or use the packages
+provided in your operating system, as they are more likely to be up to date
+with the latest bug fixes and security patches.   Depending on your platform,
+use of the bundled versions may be enabled or disabled by default, check the
+Imake configuration files for your platform in xc/config/cf to find out.
+To override the defaults for your platform or to set the path to the 
+installation location, see the instructions below on configuring the source
+via xorgsite.def and host.def.
+
+<p>
+
+X11R&relvers; depends on the following external packages:
+
+<table border=1 align="center">
+<tabular ca="|l|l|l|">
+   <tabrow>Package Name<colsep>Version<colsep>Included?</tabrow>
+   <hline>
+   <tabrow>expat<colsep>1.95.8<colsep>Yes</tabrow>
+   <tabrow>fontconfig<colsep>2.2 or newer<colsep>Yes</tabrow>
+   <tabrow>FreeType<colsep>2.1.8 or 2.1.9<colsep>Yes</tabrow>
+   <tabrow>libdrm<colsep>2.0<colsep>Yes</tabrow>
+   <tabrow>libpng<colsep>1.2.8<colsep>No</tabrow>
+   <tabrow>Mesa<colsep>6.4.1<colsep>Yes</tabrow>
+   <tabrow>xterm<colsep>Patch 207<colsep>Yes</tabrow>
+   <tabrow>zlib<colsep>1.1.4 or 1.2.3<colsep>Yes</tabrow>
+</tabular>
+</table>
+
+You can find more information and/or the original sources for these packages
+at their project websites at these URL's:
+
+<table border=1 align="center">
+<tabular ca="|l|l|">
+   <tabrow>Package Name<colsep>Website</tabrow>
+   <hline>
+   <tabrow>expat<colsep><htmlurl
+    name="http://expat.sourceforge.net/" url="http://expat.sourceforge.net/">
+    </tabrow>
+   <tabrow>fontconfig<colsep><htmlurl
+    name="http://www.fontconfig.org/" url="http://www.fontconfig.org/">
+    </tabrow>
+   <tabrow>FreeType<colsep><htmlurl
+    name="http://www.freetype.org/" url="http://www.freetype.org/">
+    </tabrow>
+   <tabrow>libdrm<colsep><htmlurl name="http://dri.freedesktop.org/libdrm/"
+    url="http://dri.freedesktop.org/libdrm/">
+    </tabrow>
+   <tabrow>libpng<colsep><htmlurl
+    name="http://www.libpng.com/pub/png/libpng.html" 
+    url="http://www.libpng.com/pub/png/libpng.html">
+    <colsep>No</tabrow>
+   <tabrow>Mesa<colsep><htmlurl
+    name="http://www.mesa3d.org/" url="http://www.mesa3d.org/">
+    </tabrow>
+   <tabrow>xterm<colsep><htmlurl name="http://dickey.his.com/xterm/xterm.html"
+    url="http://dickey.his.com/xterm/xterm.html">
+    </tabrow>
+   <tabrow>zlib<colsep><htmlurl
+    name="http://www.zlib.net/" url="http://www.zlib.net/">
+    </tabrow>
+</tabular>
+</table>
+
+
+<sect>How to get the X11R&relvers; distribution source
+<p>
+
+One way of getting the X11R&relvers; source is to
+obtain it directly from the X.Org CVS repository.  There are several
+ways of doing that, and they are described in the CVS section of our <url
+name="wiki"
+url="http://wiki.x.org/"> The CVS tag for this release is
+"<tt>&reltag;</tt>".  <![ %fullrel; [ The tag for the maintenance branch
+for this release is "<tt>&relbranchtag;</tt>".]]>
+
+<![ %notsnapshot; [
+Another method of getting the X11R&relvers; source is to
+either download the &fullrelvers; source tarballs
+sites<![ %updaterel; [ and the source patch that updates &fullrelvers; to
+&relvers]]> from freedesktop.org
+using either ftp or http.  The procedure for this is as follows:
+<itemize>
+  <item>The X11R&relvers; source is contained in the files:
+
+	<quote><tt>
+	X11R&fullrelvers;-src1.tar.gz<newline>
+	X11R&fullrelvers;-src2.tar.gz<newline>
+	X11R&fullrelvers;-src3.tar.gz<newline>
+	X11R&fullrelvers;-src4.tar.gz<newline>
+	X11R&fullrelvers;-src5.tar.gz<newline>
+	X11R&fullrelvers;-src6.tar.gz<newline>
+	X11R&fullrelvers;-src7.tar.gz<newline>
+	</tt></quote>
+
+	These can be found at <htmlurl
+	name="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/src/"
+	url="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/src/">
+	or <htmlurl
+	name="http://xorg.freedesktop.org/releases/X11R&relvers;/src/"
+	url="http://xorg.freedesktop.org/releases/X11R&relvers;/src/">	
+	and similar locations on X.Org mirror sites.
+	<tt>X11R&fullrelvers;-src4.tgz</tt> and
+	<tt>X11R&fullrelvers;-src5.tar.gz</tt> contains the fonts.
+	<tt>X11R&fullrelvers;-src6.tar.gz</tt> contains the documentation
+	source.  <tt>X11R&fullrelvers;-src7.tar.gz</tt> contains the
+	hardcopy documentation.  <tt>X11R&fullrelvers;-src1.tar.gz</tt>,
+	<tt>X11R&fullrelvers;-src2.tar.gz</tt> and
+	<tt>X11R&fullrelvers;-src3.tar.gz</tt> contains everything
+	else.  If you don't need the docs or fonts you can get by with
+	only <tt>X11R&fullrelvers;-src1.tar.gz</tt>,
+	<tt>X11R&fullrelvers;-src2.tar.gz</tt> and
+	<tt>X11R&fullrelvers;-src3.tar.gz</tt>.
+
+  <item>Extract each of these files by running the following from a directory
+	on a filesystem containing enough space (the full source requires
+	around 305MB, and a similar amount is required in addition to this
+	for the compiled binaries):
+	<quote><tt>
+	gzip -d &lt; X11R&fullrelvers;-src1.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src2.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src3.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src4.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src5.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src6.tar.gz | tar vxf -<newline>
+	gzip -d &lt; X11R&fullrelvers;-src7.tar.gz | tar vxf -<newline>
+	</tt></quote>
+]]>
+
+<![ %updaterel; [
+  <item>A patch relative to &fullrelvers is available at
+	<htmlurl
+	name="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/patches/"
+	url="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/patches/">.
+	and <htmlurl
+	name="http://xorg.freedesktop.org/releases/X11R&relvers;/patches/"
+	url="http://xorg.freedesktop.org/releases/X11R&relvers;/patches/">.
+	The patch file is <tt>&fullrelvers;-src&relvers;.diff.gz</tt>.
+
+	The patch can be applied by running:
+	<quote><tt>
+	cd <em>the directory containing the</em> xc <em>directory</em><newline>
+	gzip -d &lt; &fullrelvers;-src&relvers;.diff.gz | patch -s -p0 -E 
+	</tt>
+	</quote>
+	Look for special patching instructions in the "How to get Xorg"
+	section of the <htmlurl name="README" url="README.html"> for
+	this release.
+]]>
+</itemize>
+
+<![ %snapshot; [
+<p>
+Alternatively you can download the source for the X11R&relvers; &relvers;
+snapshot as a tarball from <htmlurl
+name="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/src/X11R&fullrelvers;.tar.gz"
+url="ftp://ftp.freedesktop.org/xorg/releases/X11R&relvers;/src/X11R&fullrelvers;.tar.gz">
+and  <htmlurl
+name="http://xorg.freedesktop.org/releases/X11R&relvers;/src/X11R&fullrelvers;.tar.gz"
+url="http://xorg.freedesktop.org/releases/X11R&relvers;/src/X11R&fullrelvers;.tar.gz">.
+This can be extracted by running:
+
+	<quote><tt>
+	gzip -d &lt; X11R&fullrelvers;.tar.gz | tar vxf -<newline>
+	</tt></quote>
+
+]]>
+
+All methods will produce one main source directory called <tt>xc</tt>. 
+
+
+<sect>Configuring the source before building
+<p>
+In most cases it shouldn't be necessary to configure anything before building.
+
+If you do want to make configuration changes, it is recommended that
+you start by going to the <tt>xc/config/cf</tt> directory, and copying
+the file <tt>xorgsite.def</tt> to <tt>host.def</tt>.  Then read through
+the <tt>host.def</tt> file (which is heavily commented), and set your 
+configuration parameters. Usually you can find
+the default settings by checking the <tt>.cf</tt> file(s) relevant to your OS.
+
+A good rule to follow is only to change things that you understand
+as it's  easy to create build problems by changing the default configuration.  
+Many of the configuration parameters are described in the <tt>xc/config/cf/README</tt>.
+
+<!--
+Another spot to check is a section <ref name="below" id="config_params">
+ with information about configuration settings.
+-->
+
+<![ %notsnapshot; [
+If you are using just the <tt>X11R&fullrelvers;-src1.tar.gz</tt>,
+<tt>X11R&fullrelvers;-src2.tar.gz</tt> and
+<tt>X11R&fullrelvers;-src3.tar.gz</tt> parts of the source dist, you
+will need to define <bf>BuildFonts</bf> to <bf>NO</bf>.
+]]>
+
+<sect>Using a shadow directory of symbolic links for the build
+<p>
+A recommended practice is to use a shadow directory of symbolic links
+to do the build of X11R&relvers; as this allows you to keep the source directory
+unmodified during the build.  It has the following benefits:
+<itemize>
+<item>When you are using CVS to maintain your source tree, 
+the update process is not disturbed by foreign files not under
+CVS's control. 
+<item>It is possible to build X11R&relvers; for several different Operating
+System or architectures from the same sources, shared by read-only NFS
+mounts.
+<item>It is possible to build X11R&relvers; with different configuration
+options, by putting a real copy of the <tt>host.def</tt> file in
+each build tree and by customizing it separately in each build tree.
+</itemize>
+<p>
+To make a shadow directory of symbolic links, use the following steps:
+<itemize>
+<item>create the directory at the top of the build tree. It is often
+created at the same level that the <tt>xc</tt> directory, but this is
+not mandatory. 
+<quote><tt>
+cd <em>the directory containing the </em>xc<em>directory</em><newline>
+mkdir build
+</tt></quote>
+<item>use the "<tt>lndir</tt>" command to make the shadow tree:
+<quote><tt>
+lndir ../xc
+</tt></quote>
+Note that you can refer to the <tt>xc</tt> directory with an absolute
+path if needed. 
+<p>
+See the <htmlurl name="lndir(1)"
+url="http://xorg.freedesktop.org/X11R&relvers;/doc/lndir.1.html"> manual page for
+details.
+</itemize>
+If <tt>lndir</tt> is not already installed on your system, you can
+build it manually from the X11R&relvers; sources by running the following
+commands: 
+<quote><tt>
+cd xc/config/util<newline>
+make -f Makefile.ini lndir<newline>
+cp lndir <em>some directory in your PATH</em>
+</tt></quote>
+
+Occasionally there may be stale links in the build tree, like 
+when files in the source tree are removed or renamed.  These can
+be cleaned up by running the "<tt>cleanlinks</tt>" script from the build
+directory (see the <htmlurl name="cleanlinks(1)" url="cleanlinks.1.html">
+manual page).  Rarely there will be changes that will require the build
+tree to be re-created from scratch.  A symptom of this can be mysterious
+build problems.  The best solution for this is to remove the build tree,
+and then re-create it using the steps outlined above.
+
+<sect>Building and installing the distribution
+<p>
+Before building the distribution, read through the OS-specific <tt/README/
+file in <tt>xc/programs/Xserver/hw/xfree86/doc</tt> that is relevant to
+you.  Once you have addressed the OS-specific details, go your
+build directory 
+(either the <tt/xc/ directory or the shadow tree created before) and
+run "<tt/make World/" with the <bf/BOOTSTRAPCFLAGS/ 
+set as described in the OS-specific README (if necessary, but most
+systems supported by X11R&relvers; don't need <bf/BOOTSTRAPCFLAGS/).  It is
+advisable to redirect stdout and stderr to <tt/World.log/ so that you
+can track down problems that might occur during the build.
+<p> 
+With Bourne-like shells (Bash, the Korn shell, <tt>zsh</tt>, etc.) use
+a command like:
+<quote><tt>
+make World &gt; World.log 2&gt;&amp;1
+</tt></quote>
+Witch C-shell variants (<tt>csh</tt>, <tt>tcsh</tt>, etc), use:
+<quote><tt>
+make World &gt;&amp; World.log
+</tt></quote>
+You can follow the progress of the build by running:
+<quote><tt>
+tail -f World.log
+</tt></quote> in a terminal. 
+
+<p>
+When the build is finished, you should check the <tt/World.Log/ file to
+see if there were any problems.  If there weren't any then you can
+install the binaries.  By default the "make World" process will exit
+at the first error.
+To restart the build process after correcting the problems, just
+run 'make'.  If Imakefiles or part of the build configuration was
+changed as part of correcting the problem, either re-run "make World",
+or run "make Everything".
+
+If you would prefer "make World" to ignore errors and build as much as
+possible, run it in the
+following way instead of the way described above:
+
+for Bourne-like shells:
+<quote><tt>
+make WORLDOPTS=-k World &gt; World.log 2&gt;&amp;1
+</tt></quote>
+for C-shell variants:
+<quote><tt>
+make WORLDOPTS=-k World &gt;&amp; World.log
+</tt></quote>
+
+To do the install, run "<tt/make install/" and "<tt/make install.man/".
+Make sure you have enough space in <tt>/usr/X11R6</tt> for the install
+to succeed.  If you want to install on a filesystem other than
+<tt>/usr</tt>, make a symbolic link to <tt>/usr/X11R6</tt> before
+installing.
+To install the tree into a different directory than <tt>/usr/X11R6</tt>
+you can specify <tt>DESTDIR</tt>:
+<quote><tt>
+make install DESTDIR=&lt;install_target_dir&gt;<newline>
+make install.man DESTDIR=&lt;install_target_dir&gt;
+</tt></quote>
+
+<p>
+Cross compiling is supported if the appropriate config files for your
+target platforms exist. You must have the compiler toolchain installed
+for your target platform and the C-compiler must know where those tools
+exist. To inform the build system where your cross compiler is located 
+set the make variable <tt/CROSSCOMPILEDIR/ to the directory where the
+toolchain binaries are installed.
+<quote><tt>
+make World CROSSCOMPILEDIR="&lt;cross compiler dir&gt";
+</tt></quote>.
+
+<sect>Reconfiguring the server (source distribution)
+<p>
+To build a different set of servers or servers with a different set of
+drivers installed:
+<enum>
+<item>Make sure the source for any new drivers is in the correct place (e.g.,
+driver source should be in a subdirectory of
+<tt>xc/programs/Xserver/hw/xfree86/drivers</tt>).
+
+<item>Change the settings of the server defines
+in <tt/host.def/ to specify which servers you
+wish to build.  Also, change the driver lists to suit your needs.
+
+<item>From <tt>xc/programs/Xserver</tt>, run:
+<tscreen><verb>
+	make Makefile
+	make Makefiles
+	make includes
+	make depend
+	make
+</verb></tscreen>
+</enum>
+
+<sect>Other useful make targets
+<p>There are some other useful targets defined in the top level
+<tt>Makefile</tt> of X11R&relvers;: 
+<itemize>
+<item><bf/Everything/ after a <tt>make World</tt>, <tt>make
+Everything</tt> does everything a <tt>make World</tt> does, except the
+cleaning of the tree. It is a way to quickly rebuild the tree after a
+source patch, but it is not 100% bullet proof. There are cases were it
+is better to force a full build by using <tt>make World</tt>. 
+
+
+<item><bf/clean/ does a partial cleaning of the source tree. Removes
+object files and generated manual pages, but leaves the Makefiles and
+the generated dependencies files in place. After a <tt>make clean</tt>
+you need to re-run 
+<tscreen><verb>
+        make includes
+        make depend
+        make
+</verb>
+</tscreen>
+to rebuild the X11R&relvers;. 
+
+<item><bf/distclean/ does a full cleaning of the source tree,
+removing all generated files. After a <tt>make distclean</tt>,
+<tt>make World</tt> is the only option to rebuild X11R&relvers;. 
+
+<item><bf/includes/ generates all generated header files and in-tree
+symbolic links  needed by the build. These files are removed by a
+<tt>make clean</tt>. 
+
+<item><bf/depend/ recomputes the dependencies for the various targets
+in all Makefiles. Depending on the operating system, the dependencies
+are stored in the Makefile, or as a separate file, called
+<tt>.depend</tt>. This target needs the generated include files
+produced by <tt>make includes</tt>. 
+
+<item><bf/VerifyOS/ displays the detected operating system version. If
+the numbers shown do not match your system, you probably need to set
+them manually in <tt>host.def</tt> and report the problem to
+Xorg via our bug database at <url name="X.Org Bug Database"
+url="https://bugs.freedesktop.org/enter_bug.cgi?product=xorg"> or via
+email at <email>xorg@lists.freedesktop.org</email>.
+</itemize>
+
+<!--
+<sect>Various Configuration settings<label id="config_params">
+<p>
+
+Fill in this section.
+-->
+
+</article>
+

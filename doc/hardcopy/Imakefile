@@ -1,0 +1,15 @@
+XCOMM $XFree86: xc/doc/specs/Imakefile,v 1.3 2000/03/02 17:52:57 dawes Exp $
+
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+#if defined(HardcopyDocDirs) && !BuildAllHardcopyDocs
+SUBDIRS = HardcopyDocDirs
+#else
+SUBDIRS = RX XKB XPRINT
+#endif /* defined(HardcopyDocDirs) && !BuildAllHardcopyDocs */
+
+all::
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

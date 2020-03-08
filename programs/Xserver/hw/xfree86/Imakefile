@@ -1,0 +1,238 @@
+XCOMM $XConsortium: Imakefile /main/12 1996/12/16 12:31:46 rws $
+
+XCOMM $XdotOrg: xc/programs/Xserver/hw/xfree86/Imakefile,v 1.5 2005/03/07 19:27:21 gisburn Exp $
+
+
+
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/Imakefile,v 3.85 2003/08/31 12:59:58 tsi Exp $
+
+#include <Server.tmpl>
+#define IHaveSubdirs
+
+#if XF86VgaHw
+VGAHWDIR = vgahw
+#endif
+
+#if XF86FBDevHw
+FBDEVHWDIR = fbdevhw
+#endif
+
+#if XF86XAA
+XAADIR = xaa
+#endif
+
+#if XF86EXA
+EXADIR = exa
+#endif
+
+#if XF1Bpp || XF4Bpp
+XF1BPPDIR = xf1bpp
+# if XF4Bpp
+XF4BPPDIR = xf4bpp
+# endif
+#endif
+
+#if XF8_32Wid
+XF8_32WIDDIR = xf8_32wid
+#endif
+
+#if XF8_32Bpp
+XF8_32BPPDIR = xf8_32bpp
+#endif
+
+#if XF8_16Bpp
+XF8_16BPPDIR = xf8_16bpp
+#endif
+
+#if XFShadowFB
+SHADOWFBDIR = shadowfb
+#endif
+
+#if XF86I2C
+I2CDIR = i2c
+#endif
+
+#if XF86DDC
+DDCDIR = ddc
+#endif
+
+#if XF86Ramdac
+RAMDACDIR = ramdac
+#endif
+
+#if XF86RAC
+RACDIR = rac
+#endif
+
+#if XF86Int10
+INT10DIR = int10
+#endif
+
+#if XF86VBE
+VBEDIR = vbe
+#endif
+
+#if DoLoadableServer
+LOADERDIR = loader
+#endif
+
+#if BuildXInputExt && defined(XInputDrivers)
+INPUTDIR = input
+#endif
+
+#if DoLoadableServer
+DRIVERSDK = sdk
+#endif
+
+#if !BuildServersOnly || BuildXFree86ConfigTools
+XF86CFGDIRS = xf86cfg xf86config
+#endif
+
+SUBDIRS = os-support common $(I2CDIR) $(XAADIR) $(EXADIR) $(XF1BPPDIR) $(XF4BPPDIR) \
+          $(XF8_32BPPDIR) $(XF8_16BPPDIR) $(SHADOWFBDIR) drivers \
+	  $(LOADERDIR) $(VGAHWDIR) $(FBDEVHWDIR) $(RAMDACDIR) $(RACDIR) \
+	  $(DDCDIR) $(INPUTDIR) $(INT10DIR) $(VBEDIR) parser scanpci doc \
+          dummylib $(XF86CFGDIRS) etc $(DRIVERSDK) $(XF8_32WIDDIR) \
+	  getconfig
+
+#if !defined(OS2Architecture) && !defined(cygwinArchitecture)
+XORGCONFIG = XConfigFile
+XF98CONFIG = XF98Config
+#else
+XORGCONFIG = xorg.cfg
+#endif
+
+SAMPLE_CONFIG_FILES = $(XORGCONFIG) $(XF98CONFIG)
+
+all:: $(SAMPLE_CONFIG_FILES) xf86Build.h
+
+CHANGELOGFILE = $(TOP)/CHANGELOG-$(RELEASE_VERSION)
+
+#if defined(BuildDate)
+    BUILD_DATE = BuildDate
+#else
+    BUILD_DATE = 0
+#endif
+
+#if defined(ChangelogDate)
+    CLOG_DATE = ChangelogDate
+#else
+    CLOG_DATE = 0
+#endif
+
+includes:: xf86Build.h
+
+clean::
+	RemoveFile(xf86Build.h)
+	RemoveFile(build.new)
+
+xf86Build.h: FRC
+	RemoveFile(build.new)
+	echo "#define BUILD_DATE $(BUILD_DATE)" > build.new
+	echo "#define CLOG_DATE $(CLOG_DATE)" >> build.new
+	@if cmp -s build.new $@; then :; \
+	else (set -x; RemoveFile($@); $(MV) build.new $@); fi
+	RemoveFile(build.new)
+
+FRC:
+
+#if defined(i386BsdArchitecture) && !defined(FreeBSDArchitecture)
+MANPAGE=Concat(FileManDir,/$(XCONFIGFILE).0)
+#else
+MANPAGE=Concat3(FileManDir,/$(XCONFIGFILE).,FileManSuffix)
+#endif
+
+RGBPATH=\"DefaultRGBDatabase\"
+LOCALFONTPATH=\"$(LIBDIR)/fonts/local/\"
+MISCFONTPATH=\"$(LIBDIR)/fonts/misc/\"
+T1FONTPATH=\"$(LIBDIR)/fonts/Type1/\"
+CIDFONTPATH=\"$(LIBDIR)/fonts/CID/\"
+SPFONTPATH=\"$(LIBDIR)/fonts/Speedo/\"
+DPI75FONTPATH=\"$(LIBDIR)/fonts/75dpi/\"
+DPI100FONTPATH=\"$(LIBDIR)/fonts/100dpi/\"
+TRUETYPEFONTPATH=\"$(LIBDIR)/fonts/TTF/\"
+DPI75USFONTPATH=\"$(LIBDIR)/fonts/75dpi/:unscaled\"
+DPI100USFONTPATH=\"$(LIBDIR)/fonts/100dpi/:unscaled\"
+
+#ifdef KFreeBSDArchitecture
+  FREEBSDMOUSEDEV="    Option	\"Device\"	\"/dev/mse0\""
+#else
+  FREEBSDMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/mse0\""
+#endif
+
+#if defined(i386BsdArchitecture)&&defined(NetBSDArchitecture)
+#  if (OSMajorVersion >= 1) && (OSMinorVersion >= 1)
+  NETBSDOLDMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/mms0\""
+  NETBSDNEWMOUSEDEV="    Option	\"Device\"	\"/dev/lms0\""
+#  else
+  NETBSDOLDMOUSEDEV="    Option	\"Device\"	\"/dev/mms0\""
+  NETBSDNEWMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/lms0\""
+#  endif
+#else
+  NETBSDOLDMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/mms0\""
+  NETBSDNEWMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/lms0\""
+#endif
+
+#ifdef LinuxArchitecture
+  LINUXMOUSEDEV="    Option	\"Device\"	\"/dev/mouse\""
+#else
+  LINUXMOUSEDEV="XCOMM    Option	\"Device\"	\"/dev/mouse\""
+#endif
+
+CppFileTarget($(XORGCONFIG), xorgconf.cpp, \
+    -DRGBPATH=$(RGBPATH) -DMISCFONTPATH=$(MISCFONTPATH) \
+    -DLOCALFONTPATH=$(LOCALFONTPATH) \
+    -DT1FONTPATH=$(T1FONTPATH) \
+    -DCIDFONTPATH=$(CIDFONTPATH) \
+    -DSPFONTPATH=$(SPFONTPATH) \
+    -DDPI75FONTPATH=$(DPI75FONTPATH) \
+    -DDPI100FONTPATH=$(DPI100FONTPATH) \
+    -DDPI75USFONTPATH=$(DPI75USFONTPATH) \
+    -DTRUETYPEFONTPATH=$(TRUETYPEFONTPATH)\
+    -DDPI100USFONTPATH=$(DPI100USFONTPATH) \
+    -DMANPAGE=$(MANPAGE) '-DMODULEPATH="$(MODULEDIR)"', \
+    $(ICONFIGFILES))
+CppFileTarget($(XF98CONFIG), XF98Conf.cpp, \
+    -DRGBPATH=$(RGBPATH) -DMISCFONTPATH=$(MISCFONTPATH) \
+    -DLOCALFONTPATH=$(LOCALFONTPATH) \
+    -DT1FONTPATH=$(T1FONTPATH) \
+    -DCIDFONTPATH=$(CIDFONTPATH) \
+    -DSPFONTPATH=$(SPFONTPATH) \
+    -DDPI75FONTPATH=$(DPI75FONTPATH) \
+    -DDPI100FONTPATH=$(DPI100FONTPATH) \
+    -DDPI75USFONTPATH=$(DPI75USFONTPATH) \
+    -DTRUETYPEFONTPATH=$(TRUETYPEFONTPATH)\
+    -DDPI100USFONTPATH=$(DPI100USFONTPATH) \
+    -DFREEBSDMOUSEDEV=$(FREEBSDMOUSEDEV) \
+    -DNETBSDOLDMOUSEDEV=$(NETBSDOLDMOUSEDEV) \
+    -DNETBSDNEWMOUSEDEV=$(NETBSDNEWMOUSEDEV) \
+    -DLINUXMOUSEDEV=$(LINUXMOUSEDEV) \
+    -DMANPAGE=$(MANPAGE) '-DMODULEPATH="$(MODULEDIR)"', \
+    $(ICONFIGFILES))
+
+InstallDriverSDKNonExecFile($(XORGCONFIG),$(DRIVERSDKDIR))
+InstallDriverSDKNonExecFile($(XF98CONFIG),$(DRIVERSDKDIR))
+
+EXTRAMANDEFS=-D__logdir__=$(LOGDIRECTORY)
+InstallManPage(Xorg,$(MANDIR))
+InstallGenManPage(xorg.conf,$(FILEMANDIR),$(FILEMANSUFFIX))
+
+InstallNamedNonExec($(XORGCONFIG),xorg.conf.eg,$(LIBDIR))
+#if 0
+InstallNamedNonExec($(XF98CONFIG),XF86Config.98,$(LIBDIR))
+#endif
+InstallNamedNonExec(Options,Options,$(LIBDIR))
+
+InstallDriverSDKNamedNonExec($(XORGCONFIG),XF86Config.eg,$(DRIVERSDKDIR))
+
+XCOMM make sure all neccesary module dirs exist to avoid breaking
+XCOMM the installation process on some platforms
+InstallDirectory($(DESTDIR)$(MODULEDIR)/drivers)
+InstallDirectory($(DESTDIR)$(MODULEDIR)/input)
+InstallDirectory($(DESTDIR)$(MODULEDIR)/multimedia)
+InstallDirectory($(DESTDIR)$(MODULEDIR)/extensions)
+InstallDirectory($(DESTDIR)$(MODULEDIR)/fonts)
+InstallDirectory($(DESTDIR)$(MODULEDIR)/internal)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

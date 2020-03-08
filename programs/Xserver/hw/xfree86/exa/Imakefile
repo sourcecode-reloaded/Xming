@@ -1,0 +1,32 @@
+#define IHaveModules
+#include <Server.tmpl>
+
+#if BuildRender
+PICTSRCS = exapict.c
+PICTOBJS = exapict.o
+#endif
+
+GENSRCS = exa.c exaasync.c exaoffscreen.c $(PICTSRCS)
+
+GENOBJS = exa.o exaasync.o exaoffscreen.o $(PICTOBJS) 
+
+SRCS = $(GENSRCS)
+OBJS = $(GENOBJS) 
+
+INCLUDES = -I$(XF86COMSRC) -I$(XF86OSSRC) -I$(EXTINCSRC) \
+           -I$(SERVERSRC)/cfb -I$(SERVERSRC)/mfb -I$(SERVERSRC)/mi \
+	   -I$(SERVERSRC)/include -I$(XINCLUDESRC) -I$(FONTINCSRC) \
+	   -I$(SERVERSRC)/fb -I$(SERVERSRC)/miext/cw \
+	   -I$(SERVERSRC)/Xext -I$(SERVERSRC)/render -I$(SERVERSRC)/randr
+
+ModuleObjectRule()
+
+DepLibraryModuleTarget(exa, $(OBJS), $(OBJS))
+
+InstallLibraryModule(exa,$(MODULEDIR),.)
+
+DependTarget()
+
+InstallDriverSDKLibraryModule(exa,$(DRIVERSDKMODULEDIR),.)
+
+InstallDriverSDKNonExecFile(exa.h,$(DRIVERSDKINCLUDEDIR))

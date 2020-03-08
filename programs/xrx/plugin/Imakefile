@@ -1,0 +1,54 @@
+XCOMM $Xorg: Imakefile,v 1.5 2005/09/160 00:51:17 gisburn Exp $
+
+#if HasSharedLibraries
+
+XCOMM This isn't an option we must build a shared lib
+#define DoSharedLib YES
+
+#define LibHeaders NO
+#define LibName xrx
+#define SoRev SOXRXREV
+
+SharedLibReferences(xrx,xrx,$(RXSRC),SOXRXREV,SharedxrxRev)
+
+          RXSRC = ../rx
+    RX_INCLUDES = -I$(RXSRC)
+
+#if HasBSD44Sockets
+ SOCKET_DEFINES = -DBSD44SOCKETS
+#endif
+
+XCOMM -DPLUGIN_TRACE can be added to the following definition to debug
+ PLUGIN_DEFINES = -DXP_UNIX
+PLUGIN_INCLUDES = -I./include
+
+        DEFINES = StrcasecmpDefines -DNETSCAPE_PLUGIN $(PLUGIN_DEFINES) $(XT_DEFINES) $(SOCKET_DEFINES) $(FUNCPROTO_DEFINES)
+       INCLUDES = -I. $(PLUGIN_INCLUDES) $(RX_INCLUDES) $(VENDOR_INCLUDES)
+
+    PARAMS_SRCS = PRead.c PParse.c BuildReq.c
+    PARAMS_OBJS = PRead.o PParse.o BuildReq.o
+
+     XMISC_SRCS = XUrls.c XAuth.c XDpyName.c Prefs.c
+     XMISC_OBJS = XUrls.o XAuth.o XDpyName.o Prefs.o
+
+           SRCS = Main.c SetWin.c PProcess.c NewNDest.c Global.c stubs.c \
+		$(PARAMS_SRCS) $(XMISC_SRCS)
+           OBJS = Main.o SetWin.o PProcess.o NewNDest.o Global.o stubs.o \
+		$(PARAMS_OBJS) $(XMISC_OBJS)
+
+   REQUIREDLIBS = $(LDPRELIB) XawClientLibs $(XTOOLONLYLIB) $(XPLIB) $(XLIB)
+
+#include <Library.tmpl>
+
+LinkFile(PRead.c,$(RXSRC)/PRead.c)
+LinkFile(PParse.c,$(RXSRC)/PParse.c)
+LinkFile(BuildReq.c,$(RXSRC)/BuildReq.c)
+LinkFile(XUrls.c,$(RXSRC)/XUrls.c)
+LinkFile(XAuth.c,$(RXSRC)/XAuth.c)
+LinkFile(XDpyName.c,$(RXSRC)/XDpyName.c)
+LinkFile(Prefs.c,$(RXSRC)/Prefs.c)
+
+DependTarget()
+InstallManPage(libxrx,$(MANDIR))
+
+#endif /* HasSharedLibraries */

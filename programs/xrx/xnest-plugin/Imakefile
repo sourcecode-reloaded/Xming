@@ -1,0 +1,41 @@
+XCOMM $Xorg: Imakefile,v 1.4 2004/09/16 00:55:03 gisburn Exp $
+
+XCOMM This isn't an option we must build a shared lib
+#define DoSharedLib YES
+
+#define LibHeaders NO
+#define LibName xrxnest
+#define SoRev SOXRXREV
+
+SharedLibReferences(xrxnest,xrxnest,$(RXSRC),SOXRXREV,SharedxrxnestRev)
+
+          RXSRC = ../rx
+    RX_INCLUDES = -I$(RXSRC)
+      PLUGINSRC = ../plugin
+
+#if HasBSD44Sockets
+SOCKET_DEFINES = -DBSD44SOCKETS
+#endif
+
+XCOMM -DPLUGIN_TRACE can be added to the following definition to debug
+ PLUGIN_DEFINES = -DXP_UNIX
+PLUGIN_INCLUDES = -I$(PLUGINSRC) -I$(PLUGINSRC)/include
+
+DEFINES = -DNETSCAPE_PLUGIN $(PLUGIN_DEFINES) -DNO_STARTING_STATE $(SOCKET_DEFINES)
+INCLUDES = -I. $(PLUGIN_INCLUDES) $(RX_INCLUDES) $(VENDOR_INCLUDES)
+
+# most objects are the same as the ones for the standard plugin
+PLUGIN_OBJS = $(PLUGINSRC)/PRead.o $(PLUGINSRC)/PParse.o \
+	$(PLUGINSRC)/BuildReq.o $(PLUGINSRC)/XUrls.o
+
+SRCS = Main.c SetWin.c PProcess.c NewNDest.c XnestDis.c
+OBJS = Main.o SetWin.o PProcess.o NewNDest.o XnestDis.o \
+	$(PLUGINSRC)/stubs.o $(PLUGIN_OBJS)
+
+    REQUIREDLIBS =  $(LDPRELIB) XawClientLibs $(XTOOLONLYLIB) $(XPLIB) $(XLIB)
+
+#include <Library.tmpl>
+
+LinkFile(Main.c,$(PLUGINSRC)/Main.c)
+
+DependTarget()

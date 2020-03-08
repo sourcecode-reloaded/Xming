@@ -1,0 +1,15 @@
+XCOMM $Xorg: Imakefile,v 1.3 2000/08/17 19:54:41 cpqbld Exp $
+XCOMM $XdotOrg: xc/programs/xkbcomp/rules/Imakefile,v 1.3 2004/05/29 19:33:22 alanc Exp $
+
+    DATAFILES = README sgi xorg sun
+    LISTFILES = sgi.lst xorg.lst xorg-it.lst sun.lst xorg.xml
+
+all::
+
+InstallMultiple($(DATAFILES),$(LIBDIR)/xkb/rules)
+InstallMultiple($(LISTFILES),$(LIBDIR)/xkb/rules)
+InstallCreateLink($(LIBDIR)/xkb/rules,xorg,xfree86)
+InstallCreateLink($(LIBDIR)/xkb/rules,xorg.lst,xfree86.lst)
+InstallCreateLink($(LIBDIR)/xkb/rules,xorg-it.lst,xfree86-it.lst)
+InstallCreateLink($(LIBDIR)/xkb/rules,xorg.xml,xfree86.xml)
+DependTarget()

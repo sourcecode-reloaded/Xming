@@ -1,0 +1,77 @@
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/drivers/sisusb/Imakefile,v 1.00 2005/01/03 12:32:11 twini Exp $
+XCOMM
+XCOMM This is an Imakefile for the SISUSB driver.  
+XCOMM
+
+#define IHaveModules
+#include <Server.tmpl>
+
+SRCS = sisusb_driver.c sisusb_dac.c sisusb_cursor.c sisusb_setup.c \
+       sisusb_accel.c sisusb_vga.c sisusb_opt.c sisusb_video.c \
+       sisusb_init.c sisusb_shadow.c sisusb_utility.c
+
+OBJS = sisusb_driver.o sisusb_dac.o sisusb_cursor.o sisusb_setup.o \
+       sisusb_accel.o sisusb_vga.o sisusb_opt.o sisusb_video.o \
+       sisusb_init.o sisusb_shadow.o sisusb_utility.o
+
+#if defined(XF86DriverSDK)
+INCLUDES = -I. -I../sis -I../../include
+#else
+INCLUDES = -I. -I../sis -I$(XF86COMSRC) -I$(XF86OSSRC) -I$(SERVERSRC)/Xext \
+           -I$(SERVERSRC)/mfb -I$(SERVERSRC)/mi \
+           -I$(SERVERSRC)/fb -I$(XF86SRC)/xaa \
+           -I$(XF86SRC)/xf24_32bpp \
+           -I$(XF86SRC)/ramdac -I$(XF86SRC)/rac \
+           -I$(FONTINCSRC) -I$(SERVERSRC)/include -I$(XINCLUDESRC) \
+           -I$(XTOP)/include/extensions \
+		   -I$(SERVERSRC)/render \
+		   -I$(XF86SRC)/shadowfb \
+		   -I$(SERVERSRC)/hw/xfree86 
+#endif
+
+DEFINES = 
+
+#if MakeHasPosixVariableSubstitutions
+SubdirLibraryRule($(OBJS))
+#endif
+
+ModuleObjectRule()
+
+ObjectModuleTarget(sisusb,$(OBJS))
+
+InstallVideoObjectModule(sisusb,$(MODULEDIR))
+
+#if !defined(XF86DriverSDK)
+InstallModuleManPage(sisusb)
+#endif
+
+DependTarget()
+
+InstallDriverSDKNonExecFile(Imakefile,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_accel.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_accel.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_cursor.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_cursor.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_dac.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_dac.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_driver.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_driver.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_init.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_init.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_opt.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_osdef.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_regs.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_setup.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_shadow.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_struct.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_types.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_vga.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_video.c,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_video.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_videostr.h,$(DRIVERSDKDIR)/drivers/sisusb)
+InstallDriverSDKNonExecFile(sisusb_utility.c,$(DRIVERSDKDIR)/drivers/sisusb)
+
+InstallDriverSDKObjectModule(sisusb,$(DRIVERSDKMODULEDIR),drivers)
+
+

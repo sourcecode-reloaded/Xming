@@ -1,0 +1,201 @@
+                        README for X11R6.9 on OpenBSD
+
+                               Matthieu Herrb
+
+                     Last modified on: 4 February 2005.
+
+1.  What and Where is X11R6.9?
+
+The X.Org Foundation X11R6.9 is an Open Source version of the X Window System
+that supports several UNIX(R) and UNIX-like operating systems (such as Linux,
+the BSDs and Solaris x86) on Intel and other platforms.
+
+See the Copyright Notice.
+
+The sources for X11R6.9 are available from http://wiki.x.org
+
+X11R6.9 builds on most architectures supported by OpenBSD. See section Build-
+ing on other architectures (section 7., page 1) for details.
+
+2.  Bug Reports for This Document
+
+Use the X.Org Bugzilla at http://bugs.freedesktop.org to submit comments or
+suggestions about this file, using the xorg product.
+
+3.  New OS dependent features
+
+See the Release Notes for non-OS dependent new features in X11R6.9.
+
+   o Switch the the Xinput-aware kbd driver for keyboard input
+
+3.1  New OS related features in X.Org 6.8
+
+   o Support for Propolice in modules.
+
+   o Server support for OpenBSD/amd64.
+
+4.  Configuring X for Your Hardware
+
+The /etc/X11/xorg.conf file tells the X server what kind of monitor, video
+card and mouse you have.  You must create it to tell the server what specific
+hardware you have.
+
+You'll need info on your hardware:
+
+   o Your mouse type, baud rate and its /dev entry.
+
+   o The video card's chipset (e.g. ATI Radeon, nVidia GeForce 4/MX etc).
+
+   o Your monitor's sync frequencies.
+
+The recommended way to generate an xorg.conf file is to use the xorgcfg util-
+ity.  The xorgconfig text utility is still there for the (few) cases where
+xorgcfg can't be used. Also, there is a sample file installed as
+/usr/X11R6/lib/X11/xorg.conf.eg, which can be used as a starting point.
+
+For details about the xorg.conf file format, refer to the xorg.conf(5) manual
+page.
+
+Once you've set up a xorg.conf file, you can fine tune the video modes with
+the xvidtune utility.
+
+4.1  About mouse configuration
+
+X11R6.9 has support for the mouse driver included in the new wscons console
+driver.  Specify ``wsmouse'' as the protocol and ``/dev/wsmouse'' as the
+device in /etc/X11/xorg.conf with a PS/2 or USB mouse.
+
+See README.mouse  for general instruction on mouse configuration.
+
+5.  Running X
+
+5.1  Starting xdm, the display manager
+
+To start the display manager, log in as root on the console and type: ``xdm
+-nodaemon''.
+
+You can start xdm automatically on bootup by adding the line:
+
+     xdm_flags=""            # for normal use: xdm_flags=""
+
+in /etc/rc.conf.local.
+
+5.2  Running X without the display manager
+
+The easiest way for new users to start X windows is to type: ``startx >&
+startx.log''.  Error messages are lost unless you redirect them because the
+server takes over the screen.
+
+To get out of X windows, type: ``exit'' in the console xterm.  You can cus-
+tomize your X by creating .xinitrc, .xserverrc, and .twmrc files in your home
+directory as described in the xinit and startx man pages.
+
+6.  Kernel Support for X
+
+OpenBSD's GENERIC kernels have all support for running X enabled.
+
+6.1  Console drivers
+
+The server supports wscons, the standard OpenBSD/i386 console driver.
+
+6.2  Aperture Driver
+
+By default OpenBSD includes the BSD 4.4 kernel security feature that disables
+access to the /dev/mem device when in multi-user mode. But the X server
+requires linear access to the display memory in most cases.
+
+OpenBSD requires the aperture driver to be enabled for all X servers, because
+the aperture driver also controls access to the I/O ports of the video
+boards.
+
+To enable the aperture driver, once included in the kernel, set
+
+     machdep.allowaperture=2
+
+in /etc/sysctl.conf.  See the xf86(4) manual page for details.
+
+Another (less recommended) way to enable linear memory and I/O ports access
+is to disable the kernel security feature by initializing securelevel to -1
+in /etc/rc.securelevel.
+
+     Caveat: the aperture driver only allows one access at a time (so
+     that the system is in the same security state once X is launched).
+     This means that if you run multiple servers on multiple virtual
+     terminals, only the first one will have linear memory access.  Set
+     securelevel to -1 if you need more that one X server at a time.
+
+6.3  MIT-SHM
+
+OpenBSD supports System V shared memory. If X detects this support in your
+kernel, it will support the MIT-SHM extension.
+
+7.  Rebuilding the X Distribution
+
+You should configure the distribution by editing xc/config/cf/host.def
+before compiling.  To compile the sources, invoke ``make World'' in the xc
+directory."
+
+Note that OpenBSD project now has its own source tree, with some local modi-
+fications. You may want to start with this tree to rebuild from sources.  The
+OpenBSD XF4 source tree is available by anoncvs from all OpenBSD anoncvs
+servers. See http://www.openbsd.org/anoncvs.html for details on anoncvs.
+
+X11R6.9 compiles on most OpenBSD architectures. The X.Org X server builds and
+run on the following systems. On other architectures supported by OpenBSD,
+only client side libraries and applications are supported.
+
+7.1  OpenBSD/alpha
+
+The X server is known to work on some VGA cards in alpha machines that sup-
+port BWX I/O, with OpenBSD 3.2 and higher.
+
+The following cards have been successfully tested for now:
+
+   o 3DLabs Permedia 2 (8, 15, 16 and 24 bits depth)
+
+   o ATI Rage Pro (works with 'Option "NoAccel"')
+
+   o Cirrus Logic CL5430 (works with 'Option "NoAccel"')
+
+   o Cirrus Logic GD5446 (8, 16 and 24 bits depth)
+
+   o Matrox MGA 2064 (8, 16 and 24 bits depth)
+
+Note that this version of doesn't work on TGA cards. The version shipped with
+OpenBSD 3.1 and higher includes an OS-specific driver wsfb that is used to
+support TGA cards.
+
+7.2  OpenBSD/macppc
+
+The X server is currently known to work on most of the G4 Macs and iBooks
+with ATI or nVidia cards.  Other machines are more or less untested.
+
+Use xorgconfig to build a /etc/X11/xorg.conf file before starting the server
+for the first time.
+
+For the Titanium Powerbook G4, you can try the following mode line in
+/etc/X11/xorg.conf to match the flat panel resolution:
+
+     Modeline "1152x768" 64.995 1152 1213 1349 1472  768 771 777 806 -HSync -VSync
+
+7.3  OpenBSD/sparc
+
+OpenBSD 3.2 on sparc switched to the wscons device driver and now uses the OS
+specific wsfb driver in the X server. This driver is not included in X11R6.9.
+Please use the version shipped with OpenBSD instead.
+
+7.4  OpenBSD/sparc64
+
+This version only has support PCI based machines using ATI cards on
+OpenBSD/sparc64. Note that the version shipped with OpenBSD has support for
+the X server on both SBus and UPA (unaccelerated) based cards.
+
+8.  Thanks
+
+Many thanks to all people who contributed to make X11R6.9 work on *BSD, in
+particular: David Dawes, Todd Fries, Miodrag Vallat, Rod Grimes, Charles Han-
+num, Amancio Hasty, Christoph Robitschko, Matthias Scheler, Michael Smith,
+Ignatios Souvatzis, Jack Velte, Nate Williams and Pace Willison.
+
+
+$XdotOrg$

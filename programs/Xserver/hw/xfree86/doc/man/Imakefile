@@ -1,0 +1,9 @@
+XCOMM $XdotOrg: xc/programs/Xserver/hw/xfree86/doc/man/Imakefile,v 1.2 2004/04/23 19:23:08 eich Exp $
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/doc/man/Imakefile,v 3.8 2002/12/22 00:46:53 dawes Exp $
+
+all::
+
+XCOMM Nothing to see here, move along
+
+XCOMM The XF86Misc man page previously stored here is now in lib/Xxf86misc
+XCOMM The XF86VM man page previously stored here is now in lib/Xxf86vm

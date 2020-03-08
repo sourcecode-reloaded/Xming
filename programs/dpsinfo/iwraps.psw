@@ -1,0 +1,14 @@
+/* $XFree86$ */
+
+defineps PSproductReturn(int bufsize | char buf[bufsize])
+  product buf
+endps
+
+defineps PSfonttypes(int maxsize | int fonttypes[maxsize])
+  (*) 
+  {
+    fonttypes
+  } null /FontType resourceforall
+  -1 fonttypes
+endps
+

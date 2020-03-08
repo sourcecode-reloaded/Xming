@@ -1,0 +1,7 @@
+XCOMM $XFree86$
+
+all::
+
+InstallDoc(PM_spec,PM_spec.txt)
+
+LinkFile(PM_spec.txt,PM_spec)

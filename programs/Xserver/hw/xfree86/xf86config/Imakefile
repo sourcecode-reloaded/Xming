@@ -1,0 +1,65 @@
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/xf86config/Imakefile,v 3.14tsi Exp $
+
+#include <Server.tmpl>
+
+
+XCOMM $XdotOrg: xc/programs/Xserver/hw/xfree86/xf86config/Imakefile,v 1.7 2005/02/11 06:37:38 ajax Exp $
+XCOMM $XConsortium: Imakefile /main/5 1996/02/21 18:12:46 kaleb $
+
+            SRCS = xorgconfig.c cards.c
+            OBJS = xorgconfig.o cards.o
+ LOCAL_LIBRARIES = $(XKBFILELIB) $(XONLYLIB)
+         DEPLIBS =
+      CARDDBFILE = $(LIBDIR)/Cards
+
+#if UseDeprecatedKeyboardDriver
+KEYBOARD_DEFS = -DUSE_DEPRECATED_KEYBOARD_DRIVER
+#endif
+
+XCONFIGFILE = XConfigFile
+#if defined XFree86Version
+XVERS = XFree86Version
+XVERSIONSTRING = XFree86VersionString
+#elif defined (XorgVersion)
+XVERS = XorgVersion
+XVERSIONSTRING = XorgVersionString
+#endif
+XCONSOLEDEFS = XFree86ConsoleDefines
+
+#ifdef DefaultFontPath
+DEFAULTFONTPATH = DefaultFontPath
+SITE_FONT_PATH = -DCOMPILEDDEFAULTFONTPATH=\"$(DEFAULTFONTPATH)\"
+#endif
+
+#if BuildSpeedo
+SPEEDO_DEF = -DHAS_SPEEDO
+#endif
+
+#if BuildType1 || BuildCID
+TYPE1_DEF = -DHAS_TYPE1
+#endif
+
+FONT_MODULE_DEFS = $(SPEEDO_DEF) $(TYPE1_DEF)
+
+         DEFINES = -DCARD_DATABASE_FILE='"$(CARDDBFILE)"' \
+		   -DXKB_RULES_DIR=\"$(LIBDIR)/xkb/rules\" \
+		   -DXCONFIGFILE=\"$(XCONFIGFILE)\" \
+		   -DXVERSION="$(XVERS)" $(XCONSOLEDEFS) $(CONFIG_DEFINES) \
+		   $(XKBDEFRULESDEFS) -DPROJECTROOT='"$(PROJECTROOT)"' \
+		   -DXDOCDIR=\"$(DOCDIR)\" $(SITE_FONT_PATH) \
+		   -DFILEMANSUFFIX=\"$(FILEMANSUFFIX)\" \
+		   -DXVERSIONSTRING=\"$(XVERSIONSTRING)\" \
+		   -DXFONTDIR=\"$(FONTDIR)\" \
+		   $(VENDOR_DEFINES) $(KEYBOARD_DEFS) $(FONT_MODULE_DEFS)
+
+
+AllTarget(ProgramTargetName(xorgconfig))
+
+NormalProgramTarget(xorgconfig,$(OBJS),$(DEPLIBS),$(LOCAL_LIBRARIES),NullParameter)
+InstallProgram(xorgconfig,$(BINDIR))
+
+DependTarget()
+
+InstallNonExecFile(Cards,$(LIBDIR))
+EXTRAMANDEFS = -D__XCONFIGFILE__=$(XCONFIGFILE) -D__XSERVERNAME__=$(XSERVERNAME)
+InstallManPage(xorgconfig,$(MANDIR))

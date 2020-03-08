@@ -1,0 +1,29 @@
+XCOMM $XdotOrg: $
+XCOMM $XFree86: xc/programs/xkbcomp/symbols/pc/Imakefile,v 1.14 2003/12/09 00:10:39 dawes Exp $
+XCOMM
+
+     DATAFILES = al am ara az \
+		ba bd be bg br bt by \
+		ca ch cz \
+		de dk \
+		ee es \
+		fi fo fr \
+		gb ge gr \
+		hr hu \
+		ie il in ir is it \
+		jp \
+		kg \
+		la latam latin lk lt lv \
+		mao mkd mm mn mt \
+		nl no \
+		pc pk pl pt \
+		ro ru \
+		se si sk srp sy \
+		th tj tr \
+		ua us uz \
+		vn 
+
+all::
+
+InstallMultiple($(DATAFILES),$(LIBDIR)/xkb/symbols/pc)
+DependTarget()

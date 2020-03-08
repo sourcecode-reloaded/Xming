@@ -1,0 +1,25 @@
+XCOMM $XFree86$
+
+#define DoNormalLib	YES
+#define DoSharedLib	NO
+#define DoExtraLib	NO
+#define DoDebugLib	NO
+#define DoProfileLib	NO
+#define LibName		re
+#define LibInstall	NO
+#define LibHeaders	NO
+
+LIB		= LibName
+
+SRCS		=\
+		re.c \
+		rec.c \
+		reo.c
+OBJS		=\
+		re.o \
+		rec.o \
+		reo.o
+
+#include <Library.tmpl>
+
+DependTarget()

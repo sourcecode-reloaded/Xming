@@ -1,0 +1,19 @@
+XCOMM $Xorg: Imakefile,v 1.1 2003/05/12 19:54:53 gisburn Exp $
+     
+        DEPLIBS = XawClientDepLibs
+LOCAL_LIBRARIES = -lXprintUtil $(XPLIB) $(MOTIFLIB) XawClientLibs 
+SYS_LIBRARIES = MathLibrary
+INCLUDES = $(MOTIFINCLUDES)
+
+DEFINES         = 
+           SRCS = xpawhelloworld.c
+           OBJS = xpawhelloworld.o
+
+ComplexProgramTarget(xpawhelloworld)
+
+#ifdef HasDocbookToMan
+all:: xpawhelloworld.man
+
+xpawhelloworld.man: xpawhelloworld.sgml
+        docbook-to-man xpawhelloworld.sgml >xpawhelloworld.man
+#endif

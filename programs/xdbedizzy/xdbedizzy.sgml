@@ -1,0 +1,345 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.2//EN" 'http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd'>
+
+<!-- Process this file with DocBook tools to generate the output format
+(such as manual pages or HTML documents).
+
+Note that strings like __appmansuffix__, __filemansuffix__, __libmansuffix__,
+__miscmansuffix__ etc. have to be replaced first (in theory that's the
+job of ENTITIES but some XML tools are highly allergic to such stuff... ;-().
+A quick way to do that is to filter this document via
+/usr/bin/sed "s/__appmansuffix__/${MANSUFFIX}/g;s/__filemansuffix__/${FILEMANSUFFIX}/g;s/__libmansuffix__/${LIBMANSUFFIX}/g;s/__miscmansuffix__/${MISCMANSUFFIX}/g"
+assuming that env vars like MANSUFFIX etc. have been set to the matching
+manual volume numbers.
+  -->
+
+<refentry>
+  <refmeta>
+    <refentrytitle>xdbedizzy</refentrytitle>
+    <manvolnum>__appmansuffix__</manvolnum>
+  </refmeta>
+
+  <refnamediv>
+    <refname>xdbedizzy</refname>
+    <refpurpose>demo of DBE creating a double buffered spinning scene</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv>
+    <!-- video mode -->
+    <cmdsynopsis>
+      <command>xdbedizzy</command>
+
+      <arg><option>-display <replaceable>host:dpy</replaceable></option></arg>
+
+      <arg><option>-delta <replaceable>dlt</replaceable></option></arg>
+
+      <arg><option>-class <replaceable>visclass</replaceable></option></arg>
+
+      <arg><option>-depth <replaceable>visdepth</replaceable></option></arg>
+
+      <arg><option>-visid <replaceable>visualid</replaceable></option></arg>
+
+      <arg><option>-list</option></arg>
+
+      <arg><option>-nodb</option></arg>
+
+      <arg><option>-help</option></arg>
+
+      <arg><option>-speed <replaceable>number</replaceable></option></arg>
+
+      <arg><option>-sync</option></arg>
+
+      <arg><option>-spokes <replaceable>n</replaceable></option></arg>
+
+      <arg><option>-verbose</option></arg>
+
+    </cmdsynopsis>
+
+    <!-- printer mode -->
+    <cmdsynopsis>
+      <command>xdbedizzy</command>
+
+      <arg><option>-print</option></arg>
+
+      <arg><option>-printer <replaceable>printername</replaceable></option></arg>
+
+      <arg><option>-printfile <replaceable>file</replaceable></option></arg>
+
+      <arg><option>-delta <replaceable>dlt</replaceable></option></arg>
+
+      <arg><option>-class <replaceable>visclass</replaceable></option></arg>
+
+      <arg><option>-depth <replaceable>visdepth</replaceable></option></arg>
+
+      <arg><option>-visid <replaceable>visualid</replaceable></option></arg>
+
+      <arg><option>-list</option></arg>
+
+      <arg><option>-nodb</option></arg>
+
+      <arg><option>-help</option></arg>
+
+      <arg><option>-sync</option></arg>
+
+      <arg><option>-spokes <replaceable>n</replaceable></option></arg>
+
+      <arg><option>-verbose</option></arg>
+   
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1>
+    <title>DESCRIPTION</title>
+
+    <para>
+      <command>xdbedizzy</command> is a demo of DBE creating a double
+      buffered spinning scene.
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>OPTIONS</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><option>-display <replaceable>host:dpy</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            This option specifies the X server to contact.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-print</option>
+        </term>
+        <listitem>
+          <para>
+            Switches to printer output (default is video output).
+            If no other printer arguments are given the default printer
+            is being used.
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><option>-printer <replaceable>printername</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            This option specifies the Xprint printer to contact.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-printfile <replaceable>filename</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Redirects the PDL (Printer Desktoption Language, usually
+            Postscript, PDF, PCL, etc.) stream to the specified file.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-numpages <replaceable>count</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Number of pages to print. Default is 5.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-delta <replaceable>dlt</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Delta value used to rotate the scene for each frame (video output)
+            or page (printer output).
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-class <replaceable>visclass</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Name of visual to choose. Valid values are
+            <simplelist type="inline">
+              <member>TrueColor</member>
+              <member>DirectColor</member>
+              <member>PseudoColor</member>
+              <member>StaticColor</member>
+              <member>Grayscale</member>
+              <member>StaticGray</member>
+            </simplelist>
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><option>-depth <replaceable>depth</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Depth of visual to use.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-visid <replaceable>visualid</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Visual ID to use (ignore <option>-class</option>,
+            <option>-depth</option>).
+          </para>
+        </listitem>
+      </varlistentry>
+                             
+      <varlistentry>
+        <term><option>-list</option>
+        </term>
+        <listitem>
+          <para>
+            List double buffer capable visuals.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-nodb</option>
+        </term>
+        <listitem>
+          <para>
+            Single buffer (ignore <option>-class</option>,
+            <option>-depth</option>, <option>-visid</option>).
+          </para>
+        </listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><option>-help</option>
+        </term>
+        <listitem>
+          <para>
+            Prints usage and exists.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-speed <replaceable>value</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Defines the time to delay between frames as delay=2sec/speed.
+            Default value is 20. This option is ignored in print mode.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-sync</option>
+        </term>
+        <listitem>
+          <para>
+            Use synchronous X connection.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-spokes <replaceable>value</replaceable></option>
+        </term>
+        <listitem>
+          <para>
+            Specify number of spokes to draw. The default value is 12.
+          </para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><option>-verbose</option>
+        </term>
+        <listitem>
+          <para>
+            Print verbose output.
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>
+      <simplelist type="inline">
+        <member><citerefentry><refentrytitle>DBE</refentrytitle><manvolnum>__libmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>XdbeSwapBuffers</refentrytitle><manvolnum>__libmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>XdbeGetVisualInfo</refentrytitle><manvolnum>__libmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>XdbeAllocateBackBufferName</refentrytitle><manvolnum>__libmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>X</refentrytitle><manvolnum>__miscmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>Xprint</refentrytitle><manvolnum>__miscmansuffix__</manvolnum></citerefentry></member>
+        <member><citerefentry><refentrytitle>Xserver</refentrytitle><manvolnum>__appmansuffix__</manvolnum></citerefentry></member>
+      </simplelist>
+    </para>
+  </refsect1>
+
+  <refsect1>
+    <title>ENVIRONMENT</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><envar>DISPLAY</envar>
+        </term>
+        <listitem>
+	    <para><envar>DISPLAY</envar> must be set to get the default host and display to use.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+        <term><envar>XPSERVERLIST</envar>
+        </term>
+        <listitem>
+	    <para><envar>XPSERVERLIST</envar> must be set for the <option>-printer</option> option
+	    identifying the available Xprint servers.
+            See <citerefentry><refentrytitle>Xprint</refentrytitle><manvolnum>__miscmansuffix__</manvolnum></citerefentry>
+	    for more details.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+<!--
+  <refsect1>
+    <title>BUGS</title>
+
+    <para>
+
+    </para>
+  </refsect1>
+-->
+  <refsect1>
+    <title>AUTHOR</title>
+
+    <para>
+      <simplelist>  
+        <member><othercredit><firstname>Mark</firstname> <surname>Kilgard</surname></othercredit></member>
+        <member><othercredit><firstname>Allen</firstname> <surname>Leinwand</surname></othercredit></member>
+        <member><othercredit><firstname>Roland</firstname> <surname>Mainz</surname> <affiliation><orgname>University Giessen</orgname></affiliation></othercredit></member>
+      </simplelist>
+    </para>
+  </refsect1>
+
+</refentry>
+
+

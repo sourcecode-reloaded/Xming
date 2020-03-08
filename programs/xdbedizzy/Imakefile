@@ -1,0 +1,16 @@
+XCOMM $XConsortium: Imakefile,v 1.1 95/05/31 14:59:30 dpw Exp $
+
+        DEFINES = ExtensionDefines -DUSE_XPRINT
+        DEPLIBS = $(DEPXPLIB) $(DEPXLIB)
+LOCAL_LIBRARIES = -lXprintUtil $(XPLIB) $(XLIB)
+  SYS_LIBRARIES = MathLibrary
+
+SimpleProgramTarget(xdbedizzy)
+
+#ifdef HasDocBookTools
+all:: xdbedizzy.man xdbedizzy.html
+
+ConvertDocBookToManPage(xdbedizzy.sgml, xdbedizzy.man)
+ConvertDocBookToHTML(xdbedizzy.sgml, xdbedizzy.html)
+#endif /* HasDocBookTools */
+

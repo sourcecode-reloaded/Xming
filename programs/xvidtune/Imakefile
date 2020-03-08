@@ -1,0 +1,14 @@
+XCOMM $XFree86: xc/programs/xvidtune/Imakefile,v 3.4 1996/01/24 22:05:05 dawes Exp $
+
+        DEPLIBS = XawClientDepLibs $(DEPXXF86VMLIB)
+#ifdef OS2Architecture
+LOCAL_LIBRARIES = $(XXF86VMLIB) XawClientLibs
+#else
+LOCAL_LIBRARIES = XawClientLibs $(XXF86VMLIB) $(XLIB)
+#endif
+           SRCS = xvidtune.c
+           OBJS = xvidtune.o
+
+ComplexProgramTarget(xvidtune)
+CppRawFileTarget(Xvidtune.ad,Xvidtune.cpp,-D__VENDOR__="$(VENDORNAME)",NullParameter)
+InstallAppDefaults(Xvidtune)

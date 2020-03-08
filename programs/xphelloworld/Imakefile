@@ -1,0 +1,26 @@
+XCOMM $Xorg: Imakefile,v 1.1 2002/02/10 19:44:00 gisburn Exp $
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+#if HasMotif2
+    XPXMHELLOWORLDDIR = xpxmhelloworld
+#endif /* HasMotif2 */
+#if HasMotif && BuildXaw
+    XPAWHELLOWORLDDIR = xpawhelloworld
+#endif /* HasMotif && BuildXaw */
+    XPXTHELLOWORLDDIR = xpxthelloworld
+      XPHELLOWORLDDIR = xphelloworld
+XPSIMPLEHELLOWORLDDIR = xpsimplehelloworld
+
+SUBDIRS = \
+	$(XPXMHELLOWORLDDIR) \
+	$(XPAWHELLOWORLDDIR) \
+	$(XPXTHELLOWORLDDIR) \
+	$(XPHELLOWORLDDIR) \
+	$(XPSIMPLEHELLOWORLDDIR)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+MakeLintLibSubdirs($(LINTSUBDIRS))
+MakeLintSubdirs($(LINTSUBDIRS),install.ln,install.ln)
+

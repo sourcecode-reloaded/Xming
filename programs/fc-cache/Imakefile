@@ -1,0 +1,46 @@
+XCOMM $XdotOrg: $
+
+#if HasGetoptLong
+GETOPT_DEFINES=-DHAVE_GETOPT_LONG
+#elif HasGetopt
+GETOPT_DEFINES=-DHAVE_GETOPT
+#endif
+
+DEFINES=$(GETOPT_DEFINES)
+
+FONTCONFIGDIR = $(TOP)/extras/fontconfig
+
+INCLUDES=$(FREETYPE2INCLUDES) -I$(FONTCONFIGDIR)
+
+LOCAL_LIBRARIES=FontconfigClientLibs
+        DEPLIBS=FontconfigClientDepLibs
+
+SRCS=fc-cache.c
+OBJS=fc-cache.o
+
+#if !InstallFontconfigLibrary
+#undef InstallProgram
+#define InstallProgram(x,y)
+#undef InstallManPage
+#define InstallManPage(x,y)
+#endif
+
+ComplexProgramTarget(fc-cache)
+LinkBuildBinary(ProgramTargetName(fc-cache))
+
+#if InstallFontconfigLibrary
+install::
+	if [ x$${DESTDIR} = x ]; then \
+		$(FCCACHE) -v -f;\
+	fi
+#endif
+
+LinkSourceFile(fc-cache.c,$(FONTCONFIGDIR)/fc-cache)
+
+#ifdef HasDocBookTools
+all:: fc-cache.man fc-cache.html
+
+ConvertDocBookToManPage(fc-cache.sgml, fc-cache.man)
+ConvertDocBookToHTML(fc-cache.sgml, fc-cache.html)
+#endif /* HasDocBookTools */
+

@@ -1,0 +1,30 @@
+XCOMM $Xorg: Imakefile,v 1.3 2000/08/17 19:54:12 cpqbld Exp $
+
+
+
+XCOMM $XFree86: xc/programs/xclock/Imakefile,v 1.8tsi Exp $
+
+#ifndef XClockUseRender
+#define XClockUseRender BuildRenderLibrary
+#endif
+
+#if XClockUseRender
+    XRENDERDEFS = -DXRENDER -DXFREE86_FT2
+    XRENDERDEPS = XftClientDepLibs
+    XRENDERLIBS = XftClientLibs MathLibrary
+    XRENDERINCS = $(XFTINCLUDES) $(XRENDERINCLUDES) -I$(XBUILDINCDIR)
+#endif
+#if HasStrlcat
+     STRLCATDEF = -DHAS_STRLCAT
+#endif
+        DEPLIBS = $(XRENDERDEPS) XkbClientDepLibs XawClientDepLibs
+LOCAL_LIBRARIES = $(XRENDERLIBS) XkbClientLibs XawClientLibs $(XPMLIB)
+           SRCS = xclock.c Clock.c
+           OBJS = xclock.o Clock.o
+        HEADERS = ClockP.h Clock.h
+       INCLUDES = $(XRENDERINCS)
+        DEFINES = $(XRENDERDEFS) XkbClientDefines $(STRLCATDEF)
+
+ComplexProgramTarget(xclock)
+InstallAppDefaults(XClock)
+InstallAppDefaultsLong(XClk-col,XClock-color)

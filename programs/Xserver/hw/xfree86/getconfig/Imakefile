@@ -1,0 +1,35 @@
+XCOMM $DHD: xc/programs/Xserver/hw/xfree86/getconfig/Imakefile,v 1.4 2003/10/03 21:32:46 dawes Exp $
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/getconfig/Imakefile,v 1.2 2003/10/30 16:58:19 tsi Exp $
+
+#include <Server.tmpl>
+/*
+ * Link these to the BuildModule directory.  This is useful for in-tree
+ * testing.
+ */
+
+AllTarget(xorg.cfg)
+	LinkBuildModule(xorg.cfg,.)
+
+AllTarget(getconfig)
+	LinkBuildModule(getconfig,.)
+
+AllTarget(getconfig.pl)
+	LinkBuildModule(getconfig.pl,.)
+
+getconfig: getconfig.sh
+	RemoveFile($@)
+	$(CP) getconfig.sh $@
+	chmod a+x $@
+
+clean::
+	RemoveFile(getconfig)
+
+InstallNamedProg(getconfig.sh,getconfig,$(BINDIR))
+InstallNamedProg(getconfig.pl,getconfig.pl,$(BINDIR))
+
+InstallNonExecFile(xorg.cfg,$(LIBDIR)/getconfig)
+InstallNonExecFile(cfg.sample,$(LIBDIR)/getconfig)
+
+InstallManPage(getconfig,$(MANDIR))
+InstallGenManPageLong(cfg,$(FILEMANDIR),getconfig,$(FILEMANSUFFIX))
+

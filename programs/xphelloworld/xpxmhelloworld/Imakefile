@@ -1,0 +1,19 @@
+XCOMM $Xorg: Imakefile,v 1.1 2003/05/12 19:54:53 gisburn Exp $
+     
+LOCAL_LIBRARIES = -lXprintUtil $(XPLIB) $(MOTIFLIB) -lXt $(XLIB)
+SYS_LIBRARIES = MathLibrary
+DEPLIBS = $(DEPXLIB)
+INCLUDES = $(MOTIFINCLUDES)
+
+DEFINES         = 
+           SRCS = xpxmhelloworld.c
+           OBJS = xpxmhelloworld.o
+
+ComplexProgramTarget(xpxmhelloworld)
+
+#ifdef HasDocBookTools
+all:: xpxmhelloworld.man xpxmhelloworld.html
+
+ConvertDocBookToManPage(xpxmhelloworld.sgml, xpxmhelloworld.man)
+ConvertDocBookToHTML(xpxmhelloworld.sgml, xpxmhelloworld.html)
+#endif /* HasDocBookTools */

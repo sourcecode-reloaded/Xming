@@ -1,0 +1,19 @@
+XCOMM $Xorg: Imakefile,v 1.1 2002/02/10 19:54:53 gisburn Exp $
+       
+LOCAL_LIBRARIES = -lXprintUtil -lXp $(XLIB)
+SYS_LIBRARIES = MathLibrary
+DEPLIBS = $(DEPXLIB)
+
+DEFINES         = 
+           SRCS = xplsprinters.c
+           OBJS = xplsprinters.o
+
+ComplexProgramTarget(xplsprinters)
+
+#ifdef HasDocBookTools
+all:: xplsprinters.man xplsprinters.html
+
+ConvertDocBookToManPage(xplsprinters.sgml, xplsprinters.man)
+ConvertDocBookToHTML(xplsprinters.sgml, xplsprinters.html)
+#endif /* HasDocBookTools */
+

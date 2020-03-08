@@ -1,0 +1,19 @@
+XCOMM $Xorg: Imakefile,v 1.1 2002/02/10 19:54:53 gisburn Exp $
+       
+LOCAL_LIBRARIES = -lXp -lXprintUtil $(XLIB)
+SYS_LIBRARIES = MathLibrary
+DEPLIBS = $(DEPXLIB)
+
+DEFINES         = 
+           SRCS = xprehashprinterlist.c
+           OBJS = xprehashprinterlist.o
+
+ComplexProgramTarget(xprehashprinterlist)
+
+#ifdef HasDocBookTools
+all:: xprehashprinterlist.man xprehashprinterlist.html
+
+ConvertDocBookToManPage(xprehashprinterlist.sgml, xprehashprinterlist.man)
+ConvertDocBookToHTML(xprehashprinterlist.sgml, xprehashprinterlist.html)
+#endif /* HasDocBookTools */
+

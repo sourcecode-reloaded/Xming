@@ -1,0 +1,41 @@
+XCOMM $XFree86: xc/programs/Xserver/hw/xfree86/input/keyboard/Imakefile,v 1.2 2001/01/24 00:06:36 dawes Exp $
+
+#define IHaveModules
+#include <Server.tmpl>
+
+SRCS = kbd.c
+OBJS = kbd.o
+
+DRIVER = kbd
+
+COMPAT_DRIVER = keyboard
+
+#if UseDeprecatedKeyboardDriver
+KEYBOARD_DEFS = -DUSE_DEPRECATED_KEYBOARD_DRIVER
+#endif
+
+INCLUDES = -I. -I$(XF86COMSRC) -I$(XF86SRC)/loader -I$(XF86OSSRC) \
+	   -I$(SERVERSRC)/mi -I$(SERVERSRC)/include -I$(XINCLUDESRC) \
+	   -I$(EXTINCSRC)
+
+DEFINES = $(XKBDEFRULESDEFS) $(KEYBOARD_DEFS)
+#if MakeHasPosixVariableSubstitutions
+SubdirLibraryRule($(OBJS))
+#endif
+
+ModuleObjectRule()
+
+ObjectModuleTarget($(DRIVER),$(OBJS))
+ObjectModuleTarget($(COMPAT_DRIVER),$(OBJS))
+
+InstallInputObjectModule($(DRIVER),$(MODULEDIR))
+InstallInputObjectModule($(COMPAT_DRIVER),$(MODULEDIR))
+
+#if !defined(XF86DriverSDK)
+InstallModuleManPage($(DRIVER))
+InstallModuleManPage(keyboard)
+#endif
+
+DependTarget()
+
+InstallDriverSDKObjectModule($(DRIVER),$(DRIVERSDKMODULEDIR),input)

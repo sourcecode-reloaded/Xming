@@ -1,0 +1,39 @@
+XCOMM $XFree86: xc/lib/fontconfig/fc-list/Imakefile,v 1.6 2002/08/19 19:32:04 keithp Exp $
+XCOMM $XdotOrg: $
+
+#if HasGetoptLong
+GETOPT_DEFINES=-DHAVE_GETOPT_LONG
+#elif HasGetopt
+GETOPT_DEFINES=-DHAVE_GETOPT
+#endif
+
+DEFINES=$(GETOPT_DEFINES)
+
+FONTCONFIGDIR = $(TOP)/extras/fontconfig
+
+INCLUDES=$(FREETYPE2INCLUDES) -I$(FONTCONFIGDIR)
+
+LOCAL_LIBRARIES=FontconfigClientLibs
+        DEPLIBS=FontconfigClientDepLibs
+
+SRCS=fc-list.c
+OBJS=fc-list.o
+
+#if !InstallFontconfigLibrary
+#undef InstallProgram
+#define InstallProgram(x,y)
+#undef InstallManPage
+#define InstallManPage(x,y)
+#endif
+
+ComplexProgramTarget(fc-list)
+LinkBuildBinary(ProgramTargetName(fc-list))
+
+LinkSourceFile(fc-list.c,$(FONTCONFIGDIR)/fc-list)
+
+#ifdef HasDocBookTools
+all:: fc-list.man fc-list.html
+
+ConvertDocBookToManPage(fc-list.sgml, fc-list.man)
+ConvertDocBookToHTML(fc-list.sgml, fc-list.html)
+#endif /* HasDocBookTools */

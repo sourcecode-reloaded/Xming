@@ -1,0 +1,111 @@
+XCOMM $Xorg: xc/programs/Xserver/hw/xfree86/drivers/i2c/Imakefile,v Exp $
+XCOMM
+#define IHaveModules
+#include <Server.tmpl>
+
+#if DoLoadableServer
+
+MODSRC_FI1236 = fi1236_module.c
+MODSRC_MSP3430 = msp3430_module.c
+MODSRC_BT829 = bt829_module.c
+MODSRC_TDA9850 = tda9850_module.c
+MODSRC_TDA8425 = tda8425_module.c
+MODSRC_TDA9885 = tda9885_module.c
+MODSRC_UDA1380 = uda1380_module.c
+
+MODOBJ_FI1236 = fi1236_module.o
+MODOBJ_MSP3430 = msp3430_module.o
+MODOBJ_BT829 = bt829_module.o
+MODOBJ_TDA9850 = tda9850_module.o
+MODOBJ_TDA8425 = tda8425_module.o
+MODOBJ_TDA9885 = tda9885_module.o
+MODOBJ_UDA1380 = uda1380_module.o
+
+#endif
+
+DEFINES = $(CPIODEFINES) $(DGADEFINES) $(NONPCIDEFINES) $(DRIDEFINES)
+
+SRCS_FI1236 = fi1236.c $(MODSRC_FI1236)
+SRCS_MSP3430 = msp3430.c $(MODSRC_MSP3430)
+SRCS_BT829 = bt829.c $(MODSRC_BT829)
+SRCS_TDA9850 = tda9850.c $(MODSRC_TDA9850)
+SRCS_TDA8425 = tda8425.c $(MODSRC_TDA8425)
+SRCS_TDA9885 = tda9885.c $(MODSRC_TDA9885)
+SRCS_UDA1380 = uda1380.c $(MODSRC_UDA1380)
+
+OBJS_FI1236 = fi1236.o $(MODOBJ_FI1236)
+OBJS_MSP3430 = msp3430.o $(MODOBJ_MSP3430)
+OBJS_BT829 = bt829.o $(MODOBJ_BT829)
+OBJS_TDA9850 = tda9850.o $(MODOBJ_TDA9850)
+OBJS_TDA8425 = tda8425.o $(MODOBJ_TDA8425)
+OBJS_TDA9885 = tda9885.o $(MODOBJ_TDA9885)
+OBJS_UDA1380 = uda1380.o $(MODOBJ_UDA1380)
+
+SRCS = $(SRCS_FI1236) $(SRCS_MSP3430) $(SRCS_BT829) \
+	$(SRCS_TDA9850) $(SRCS_TDA8425) $(SRCS_TDA9885) \
+	$(SRCS_UDA1380)
+	
+OBJS = $(OBJS_FI1236) $(OBJS_MSP3430) $(OBJS_BT829) \
+	$(OBJS_TDA9850) $(OBJS_TDA8425) $(OBJS_TDA9885) \
+	$(OBJS_UDA1380)
+
+#if defined(XF86DriverSDK)
+INCLUDES = -I. -I../../include
+#else
+INCLUDES = -I. -I$(XF86COMSRC) -I$(XF86OSSRC) -I$(XF86SRC) \
+           -I$(XF86SRC)/i2c  -I$(SERVERSRC)/include \
+           -I$(EXTINCSRC) -I$(XINCLUDESRC)
+#endif
+
+#if MakeHasPosixVariableSubstitutions
+SubdirLibraryRule($(OBJS))
+#endif
+
+ModuleObjectRule()
+
+ObjectModuleTarget(fi1236,$(OBJS_FI1236))
+ObjectModuleTarget(msp3430, $(OBJS_MSP3430))
+ObjectModuleTarget(bt829, $(OBJS_BT829))
+ObjectModuleTarget(tda9850, $(OBJS_TDA9850))
+ObjectModuleTarget(tda8425, $(OBJS_TDA8425))
+ObjectModuleTarget(tda9885, $(OBJS_TDA9885))
+ObjectModuleTarget(uda1380, $(OBJS_UDA1380))
+
+InstallMultimediaObjectModule(fi1236,$(MODULEDIR))
+InstallMultimediaObjectModule(msp3430,$(MODULEDIR))
+InstallMultimediaObjectModule(bt829,$(MODULEDIR))
+InstallMultimediaObjectModule(tda9850,$(MODULEDIR))
+InstallMultimediaObjectModule(tda8425,$(MODULEDIR))
+InstallMultimediaObjectModule(tda9885,$(MODULEDIR))
+InstallMultimediaObjectModule(uda1380,$(MODULEDIR))
+
+DependTarget()
+
+InstallDriverSDKNonExecFile(fi1236.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(fi1236_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(fi1236.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(msp3430.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(msp3430_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(msp3430.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(bt829.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(bt829_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(bt829.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(tda8425.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda8425_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda8425.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(tda9850.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda9850_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda9850.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(tda9885.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda9885_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(tda9885.h,$(DRIVERSDKDIR)/drivers/ati)
+
+InstallDriverSDKNonExecFile(uda1380.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(uda1380_module.c,$(DRIVERSDKDIR)/drivers/ati)
+InstallDriverSDKNonExecFile(uda1380.h,$(DRIVERSDKDIR)/drivers/ati)
+

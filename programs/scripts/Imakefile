@@ -1,0 +1,16 @@
+XCOMM $Xorg: Imakefile,v 1.3 2000/08/17 19:54:04 cpqbld Exp $
+
+all::
+
+InstallNamedProg(xon.sh,xon,$(BINDIR))
+InstallManPage(xon,$(MANDIR))
+
+XCOMM Install helper script which turns MIT-COOKIE-1 into SUN-DES-1 auth
+XCOMM when OS supports SecureRPC (and therefore the SUN-DES-1 auth.)
+#if HasSecureRPC
+all:: xauth_switch_to_sun-des-1
+
+MakeScriptFromCpp(xauth_switch_to_sun-des-1, $(OS_DEFINES))
+InstallNamedProg(xauth_switch_to_sun-des-1,xauth_switch_to_sun-des-1,$(BINDIR))
+#endif /* HasSecureRPC */
+

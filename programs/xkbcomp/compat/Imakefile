@@ -1,0 +1,16 @@
+XCOMM $Xorg: Imakefile,v 1.3 2000/08/17 19:54:34 cpqbld Exp $
+
+
+
+
+XCOMM $XFree86: xc/programs/xkbcomp/compat/Imakefile,v 3.9 2003/02/11 02:51:10 dawes Exp $
+
+     DATAFILES = README accessx basic complete default iso9995 japan \
+		 keypad misc mousekeys norepeat pc pc98 xtest ledcaps lednum \
+		 ledscroll xfree86
+
+all::
+
+MakeXkbDir($(LIBDIR)/xkb,compat)
+InstallMultiple($(DATAFILES),$(LIBDIR)/xkb/compat)
+DependTarget()

@@ -1,0 +1,17 @@
+XCOMM $XFree86$
+
+#include <Threads.tmpl>
+
+            SRCS = xdriinfo.c
+            OBJS = xdriinfo.o
+ LOCAL_LIBRARIES = $(GLXLIB) $(XLIB) 
+         DEPLIBS =
+
+AllTarget(ProgramTargetName(xdriinfo))
+
+NormalProgramTarget(xdriinfo,$(OBJS),$(DEPLIBS),$(LOCAL_LIBRARIES),NullParameter)
+InstallProgram(xdriinfo,$(BINDIR))
+
+DependTarget()
+
+InstallManPage(xdriinfo,$(MANDIR))

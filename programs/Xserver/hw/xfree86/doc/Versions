@@ -1,0 +1,156 @@
+                 X.Org and XFree86 Version Numbering Schemes
+
+                          The XFree86 Project, Inc
+          Updated for X11R6.9 by Keith Packard and Kevin E. Martin
+
+                              21 December 2005
+
+                                  Abstract
+
+     X.Org has adopted the same basic numbering scheme used by the
+     XFree86 Project, Inc. for their releases.  The actual numbers are
+     different, but the basic scheme is the same.  This document
+     reflects the policy that X.Org uses.  The version numbering schemes
+     used by XFree86 have changed from time to time.
+
+1.  Releases, Development Streams and Branches
+
+As of the release of version X11R6.7 in March 2004, X.Org has three release
+branches.  First is the trunk of the CVS repository.  This is the main devel-
+opment stream, where all new work and work for future releases is done.
+
+Second is the stable bugfix branch for the latest full release (6.9.0).  It
+is created around the time of the release.  The branch for the current
+release is called "XORG-6_9-branch".  Fixes for bugs found in the release
+will be added to this branch (as well as the trunk), and updates to this
+release (if any) will be cut from this branch.  Similar stable branches are
+present for previous full releases.
+
+The X.Org Foundation is planning to make full releases from the main develop-
+ment stream at regular intervals in the 6-12 month range.  The feature
+freezes for these releases will usually be 2-3 months before the release
+dates.  This general plan is a goal, not a binding commitment.  The actual
+release intervals and dates will depend to a large degree on the resource
+available to X.Org.  Full releases consist of full source code tarballs, plus
+full binary distributions for a range of supported platforms.  Update/bugfix
+releases will be made on an as-required basis, depending also on the avail-
+ability of resources, and will generally be limited to serious bug and secu-
+rity fixes.  New features will not usually be added in update releases.
+Update/bugfix releases will not be full releases, and will consist of source
+code patches, plus binary updates to be layered on top of the previous full
+release.
+
+The next full release will be version 7.1.  There is no scheduled update
+release, but if one is needed, the version will be 6.9.1.
+
+Aside from actual releases, snapshots of the active release branches are
+tagged in the CVS repository from time to time.  Each such snapshot has an
+identifiable version number.
+
+2.  Current (new) Version Numbering Scheme
+
+Starting with the main development branch after X11R6.7, the X.Org versions
+are numbered according to the scheme outlined here.
+
+The version numbering format is M.m.P.s, where M is the major version number,
+m is the minor version number, P is the patch level, and s is the snapshot
+number.  Full releases have P set to zero, and it is incremented for each
+subsequent bug fix release on the post-release stable branch.  The snapshot
+number s is present only for between-release snapshots of the development and
+stable branches.
+
+2.1  Development Branch
+
+Immediately after forming a release stable branch, the patch level number for
+the main development branch is bumped to 99, and the snapshot number is
+reset.  The snapshot number is incremented for each tagged development snap-
+shot.  The CVS tag for snapshots is "XORG-M_m_P_s".  When the development
+branch enters feature freeze, the snapshot number is bumped to 900.  A stable
+branch may be created for the next full release at any time after the feature
+freeze.  When it is, the branch is called "XORG-M_m-branch".  The snapshot
+number is incremented from there until the release is finalised.  Each of
+these snapshots is a "release candidate".  When the release is finalised, the
+minor version is incremented, the patch level is set to zero, and the snap-
+shot number removed.
+
+Here's an example which shows the version number sequence for the development
+leading up to version 6.8:
+
+      6.7.99.1
+            The first snapshot of the pre-6.8 development branch.
+
+      6.7.99.23
+            The twenty-third snapshot of the pre-6.8 development branch.
+
+      6.7.99.900
+            The start of the 6.8 feature freeze.
+
+      6.7.99.903
+            The third 6.8 release candidate.
+
+      6.8.0
+            The 6.8 release.
+
+      6.8.99.1
+            The first pre-6.9 development snapshot, which  is the first main
+            branch snapshot after creating the 6.8 stable branch.
+
+2.2  Stable Branch
+
+After a full release, the stable branch for the release will be maintained
+with bug fixes and important updates until the next full release.  Any snap-
+shots on this branch are considered "release candidates", which is indicated
+by setting s to a number above 900.  The snapshot number is incremented for
+each release candidate until the update release is finalised.  The patch
+level value (P) is incremented for each update release.
+
+Here's an example which shows a version number sequence for a 6.8.x stable
+branch:
+
+      6.8.0
+            The 6.8 release.
+
+      6.8.0.901
+            The first pre 6.8.1 snapshot.
+
+      6.8.0.903
+            The third pre 6.8.1 snapshot, also known as the third 6.8.1
+            release candidate.
+
+      6.8.1
+            The 6.8.1 release.
+
+      6.8.1.901
+            The first pre 6.8.2 snapshot.
+
+      6.8.2
+            The 6.8.2 release.
+
+3.  Finding the X.Org X Server Version From a Client
+
+The X.Org X servers report a VendorRelease value that matches the X.Org ver-
+sion number.  There have been some cases of releases where this value wasn't
+set correctly.  The rules for interpreting this value as well as the known
+exceptions are outlined here.
+
+For post-6.7.0 development and release versions using the new numbering
+scheme, the VendorRelease value is MMmmPPsss.  That is, version M.m.P.s has
+VendorRelease set to M * 10000000 + m * 100000 + P * 1000 + s.
+
+The following is a code fragment taken from xdpyinfo.c that shows how the
+VendorRelease information can be interpreted.
+
+         if (strstr(ServerVendor(dpy), "X.Org")) {
+             int vendrel = VendorRelease(dpy);
+
+             printf("X.Org version: ");
+          printf("%d.%d.%d", vendrel / 10000000,
+                 (vendrel /   100000) % 100,
+                 (vendrel /     1000) % 100);
+          if (vendrel % 1000) {
+              printf(".%d", vendrel % 1000);
+          }
+         }
+
+
+$XdotOrg$

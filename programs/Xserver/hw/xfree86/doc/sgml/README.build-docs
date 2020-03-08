@@ -1,0 +1,52 @@
+
+How to build formatted docs and update CVS
+==========================================
+
+Formatted docs are not build by default as building them takes a considerable
+amount of time. In the tree we therefore ship an ACII formatted version of 
+the docs in xc/programs/Xserver/hw/xfree86/doc which should be updated 
+whenever the SGML source changes.
+This document describes the steps to take.
+
+Before updating the formatted docs please make sure you have the doctools
+installed (see wiki.x.org on where you can find these tools). You need to
+enable building the formatted docs in your host.def with:
+
+#define BuildAllDocs	      YES
+#define HasSgmlFmt	      YES
+
+Once you have modified the SGML sources in the
+xc/programs/Xserver/hw/xfree86/doc/sgml directory do the following steps:
+
+  1. Commit the SGML source.
+
+  2. If you are using an lndir'ed buid tree and you have created a new file,
+     create an empty version of the ASCII file in xfree86/doc and rerun
+     lndir in your build tree.
+
+  3. If you have previously built the tree without building the docs 
+     you have to rebuild the Makefiles in the xfree86/doc directory so that
+     the two Imake defines above take effect. In xfree86/doc do:
+
+     make Makefile
+     make Makefiles
+
+     Now you can rebuild the formatted docs in the build tree with
+
+     make update.docs 
+
+     in the xfree86/doc/sgml directory. This will also copy the new files
+     into the source tree (you must have write permission to the source tree
+     for this to work).
+
+  4. If you have changed any entry defined in xfree86/doc/sgml/defs.ent file
+     you may want to force the rebuild of all formatted docs with:
+
+     make update.docs FORCEUPDATE=yes
+
+  5. Now you can commit the formatted docs. If you have created new files
+     don't forget to do a 'cvs add' for the formatted version also.
+
+For some versions of the doctools to work properly you may have to set
+the LANG environment variable to iso88591.
+

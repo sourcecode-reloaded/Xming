@@ -1,0 +1,100 @@
+.\" -*- coding: us-ascii -*-
+.TH xdbedizzy __appmansuffix__ "20 October 2004"  
+.SH NAME
+xdbedizzy \- demo of DBE creating a double buffered spinning scene
+.SH SYNOPSIS
+.ad l
+\fBxdbedizzy\fR \kx
+.if (\nxu > (\n(.lu / 2)) .nr x (\n(.lu / 5)
+'in \n(.iu+\nxu
+[\fB\-display \fBhost:dpy\fR\fR] [\fB\-delta \fBdlt\fR\fR] [\fB\-class \fBvisclass\fR\fR] [\fB\-depth \fBvisdepth\fR\fR] [\fB\-visid \fBvisualid\fR\fR] [\fB\-list\fR] [\fB\-nodb\fR] [\fB\-help\fR] [\fB\-speed \fBnumber\fR\fR] [\fB\-sync\fR] [\fB\-spokes \fBn\fR\fR] [\fB\-verbose\fR]
+'in \n(.iu-\nxu
+.ad b
+.PP
+.ad l
+\fBxdbedizzy\fR \kx
+.if (\nxu > (\n(.lu / 2)) .nr x (\n(.lu / 5)
+'in \n(.iu+\nxu
+[\fB\-print\fR] [\fB\-printer \fBprintername\fR\fR] [\fB\-printfile \fBfile\fR\fR] [\fB\-delta \fBdlt\fR\fR] [\fB\-class \fBvisclass\fR\fR] [\fB\-depth \fBvisdepth\fR\fR] [\fB\-visid \fBvisualid\fR\fR] [\fB\-list\fR] [\fB\-nodb\fR] [\fB\-help\fR] [\fB\-sync\fR] [\fB\-spokes \fBn\fR\fR] [\fB\-verbose\fR]
+'in \n(.iu-\nxu
+.ad b
+.SH DESCRIPTION
+xdbedizzy is a demo of DBE creating a double
+buffered spinning scene.
+.SH OPTIONS
+.TP 
+\fB\-display \fIhost:dpy\fB\fR 
+This option specifies the X server to contact.
+.TP 
+\fB\-print\fR 
+Switches to printer output (default is video output).
+If no other printer arguments are given the default printer
+is being used.
+.TP 
+\fB\-printer \fIprintername\fB\fR 
+This option specifies the Xprint printer to contact.
+.TP 
+\fB\-printfile \fIfilename\fB\fR 
+Redirects the PDL (Printer Desktoption Language, usually
+Postscript, PDF, PCL, etc.) stream to the specified file.
+.TP 
+\fB\-numpages \fIcount\fB\fR 
+Number of pages to print. Default is 5.
+.TP 
+\fB\-delta \fIdlt\fB\fR 
+Delta value used to rotate the scene for each frame (video output)
+or page (printer output).
+.TP 
+\fB\-class \fIvisclass\fB\fR 
+Name of visual to choose. Valid values are
+TrueColor, DirectColor, PseudoColor, StaticColor, Grayscale, StaticGray
+.TP 
+\fB\-depth \fIdepth\fB\fR 
+Depth of visual to use.
+.TP 
+\fB\-visid \fIvisualid\fB\fR 
+Visual ID to use (ignore \fB\-class\fR,
+\fB\-depth\fR).
+.TP 
+\fB\-list\fR 
+List double buffer capable visuals.
+.TP 
+\fB\-nodb\fR 
+Single buffer (ignore \fB\-class\fR,
+\fB\-depth\fR, \fB\-visid\fR).
+.TP 
+\fB\-help\fR 
+Prints usage and exists.
+.TP 
+\fB\-speed \fIvalue\fB\fR 
+Defines the time to delay between frames as delay=2sec/speed.
+Default value is 20. This option is ignored in print mode.
+.TP 
+\fB\-sync\fR 
+Use synchronous X connection.
+.TP 
+\fB\-spokes \fIvalue\fB\fR 
+Specify number of spokes to draw. The default value is 12.
+.TP 
+\fB\-verbose\fR 
+Print verbose output.
+.SH "SEE ALSO"
+\fBDBE\fR(__libmansuffix__), \fBXdbeSwapBuffers\fR(__libmansuffix__), \fBXdbeGetVisualInfo\fR(__libmansuffix__), \fBXdbeAllocateBackBufferName\fR(__libmansuffix__), \fBX\fR(__miscmansuffix__), \fBXprint\fR(__miscmansuffix__), \fBXserver\fR(__appmansuffix__)
+.SH ENVIRONMENT
+.TP 
+\fBDISPLAY\fR 
+\fBDISPLAY\fR must be set to get the default host and display to use.
+.TP 
+\fBXPSERVERLIST\fR 
+\fBXPSERVERLIST\fR must be set for the \fB\-printer\fR option
+identifying the available Xprint servers.
+See \fBXprint\fR(__miscmansuffix__)
+for more details.
+.SH AUTHOR
+
+Mark Kilgard
+.PP
+Allen Leinwand
+.PP
+Roland Mainz
+

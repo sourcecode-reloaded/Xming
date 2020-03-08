@@ -1,0 +1,35 @@
+XCOMM $XFree86$
+/*
+ * Server Makefile for Driver SDK
+ */
+
+
+#define IHaveModules
+#include <Server.tmpl>
+#define IHaveSubdirs
+
+SUBDIRS = drivers
+
+MakeSubdirs($(SUBDIRS))
+
+#if MakeHasPosixVariableSubstitutions
+DONES = $(SUBDIRS:%=%/DONE)
+#if HasGnuMake || HasBsdMake
+$(DONES): $(SUBDIRS)
+#endif
+#endif
+
+NormalLibraryObjectRule()
+
+ForceSubdirs($(SUBDIRS))
+
+DependSubdirs($(SUBDIRS))
+
+
+
+
+
+
+
+
+

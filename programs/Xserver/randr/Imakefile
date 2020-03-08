@@ -1,0 +1,18 @@
+XCOMM $XFree86: xc/programs/Xserver/randr/Imakefile,v 1.1 2001/05/23 03:29:44 keithp Exp $
+#include <Server.tmpl>
+
+       SRCS =	randr.c mirandr.c rrinfo.c rrcrtc.c rroutput.c rrmode.c rrscreen.c rrpointer.c rrdispatch.c rrsdispatch.c rrproperty.c
+
+       OBJS =	randr.o mirandr.o rrinfo.o rrcrtc.o rroutput.o rrmode.o rrscreen.o rrpointer.o rrdispatch.o rrsdispatch.o rrproperty.o
+
+   INCLUDES = -I../include -I../mi -I../../../include/fonts \
+		-I../fb -I../hw/kdrive -I$(EXTINCSRC) -I$(XINCLUDESRC) \
+		-I$(FONTINCSRC) -I../render
+   LINTLIBS = ../dix/llib-ldix.ln ../os/llib-los.ln
+
+NormalLibraryTarget(randr,$(OBJS))
+NormalLibraryObjectRule()
+LintLibraryTarget(randr,$(SRCS))
+NormalLintTarget($(SRCS))
+
+DependTarget()

@@ -1,0 +1,119 @@
+#define IHaveModules
+#include <Server.tmpl>
+
+#if BuildXF86DRI
+DRISRCS = via_dri.c via_xvmc.c
+DRIOBJS = via_dri.o via_xvmc.o
+DRIINCLUDES = -I$(SERVERSRC)/GL/dri -I$(LIBSRC)/GL/dri \
+       -I$(DRMSRCDIR)/shared-core -I$(TOP)/include
+DRIDEFINES = $(GLX_DEFINES)
+#endif
+
+SRCS = via_driver.c \
+    via_accel.c \
+    via_bandwidth.c \
+    via_mode.c \
+    via_cursor.c \
+    via_shadow.c \
+    via_dga.c \
+    via_video.c \
+    via_i2c.c \
+    via_id.c \
+    via_swov.c \
+    via_memory.c \
+    via_memcpy.c \
+    via_vbe.c \
+    via_vgahw.c \
+    via_vt162x.c \
+    $(DRISRCS)
+
+OBJS = via_driver.o \
+    via_accel.o \
+    via_bandwidth.o \
+    via_mode.o \
+    via_cursor.o \
+    via_shadow.o \
+    via_dga.o \
+    via_video.o \
+    via_i2c.o \
+    via_id.o \
+    via_swov.o \
+    via_memory.o \
+    via_memcpy.o \
+    via_vbe.o \
+    via_vgahw.o \
+    via_vt162x.o \
+    $(DRIOBJS)
+
+#if defined(XF86DriverSDK)
+INCLUDES = -I. -I../../include
+#else
+INCLUDES = -I. -I$(XF86COMSRC) -I$(XF86OSSRC) \
+           -I$(SERVERSRC)/mfb -I$(SERVERSRC)/mi \
+           -I$(XF86SRC)/xaa -I$(XF86SRC)/xf1bpp \
+	   -I$(XF86SRC)/xf4bpp -I$(SERVERSRC)/Xext \
+           -I$(XF86SRC)/vgahw -I$(XF86SRC)/ramdac \
+           -I$(XF86SRC)/ddc -I$(XF86SRC)/i2c \
+           -I$(XF86SRC)/rac -I$(XF86SRC)/int10 -I$(SERVERSRC)/render \
+           -I$(SERVERSRC)/include -I$(XINCLUDESRC) -I$(FONTINCSRC) \
+           -I$(EXTINCSRC) -I$(XF86SRC)/vbe -I$(XF86SRC)/shadowfb \
+           -I$(SERVERSRC)/fb $(DRIINCLUDES)
+#endif
+
+DEFINES = $(DRIDEFINES)
+
+#if MakeHasPosixVariableSubstitutions
+SubdirLibraryRule($(OBJS))
+#endif
+
+NormalAsmObjectRule()
+
+ModuleObjectRule()
+ObjectModuleTarget(via, $(OBJS))
+
+InstallVideoObjectModule(via,$(MODULEDIR))
+
+#if !defined(XF86DriverSDK)
+InstallModuleManPage(via)
+#endif
+
+DependTarget()
+
+InstallDriverSDKNonExecFile(Imakefile,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_accel.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_bandwidth.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_bios.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_cursor.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_dga.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_dri.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_dri.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_driver.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_driver.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_drm.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_drmclient.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_i2c.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_id.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_id.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_memcpy.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_memcpy.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_memory.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_mode.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_mode.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_priv.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_regs.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_shadow.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_swov.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_swov.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_vbe.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_vgahw.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_vgahw.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_video.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_video.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_vt162x.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_vt162x.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_xvmc.c,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_xvmc.h,$(DRIVERSDKDIR)/drivers/via)
+InstallDriverSDKNonExecFile(via_xvpriv.h,$(DRIVERSDKDIR)/drivers/via)
+
+InstallDriverSDKObjectModule(via,$(DRIVERSDKMODULEDIR),drivers)

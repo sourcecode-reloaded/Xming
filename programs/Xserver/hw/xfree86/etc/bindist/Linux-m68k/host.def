@@ -1,0 +1,11 @@
+/*
+ * Host.def for building Linux/m68k bindists
+ *
+ * $XFree86: xc/programs/Xserver/hw/xfree86/etc/bindist/Linux-m68k/host.def,v 1.5 2001/03/17 18:41:33 dawes Exp $
+ */
+
+#define InstallEmptyHostDef
+#define BuildBindist
+
+#define ForceNormalLib YES
+

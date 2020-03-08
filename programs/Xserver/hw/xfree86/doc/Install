@@ -1,0 +1,31 @@
+                      Installation Details for X11R6.9
+
+                            The X.Org Foundation
+
+                              21 December 2005
+
+                                  Abstract
+
+     How to install the X.Org Foundation's X Window System release ver-
+     sion X11R6.9.
+
+1.  Introduction
+
+At this time, the X.Org Foundation is not making binary releases; this will
+likely change in the future as our tinderbox system reaches its full poten-
+tial.
+
+However, people are already packaging the distribution for release in many of
+the common distributions (e.g., Fedora Core, SuSE Linux, Debian), and you may
+wish to work with those distributors on their packaged binaries.
+
+In the meanwhile, we recommend building X from source and doing an install on
+top of your running X installation *after* having carefully backed up
+/usr/X11R6 to allow restoration in case of some unanticipated problems.  See
+the file INSTALL.TXT in the root of the source distribution for build and
+install details.
+
+     Generated from Id: Install.sgml,v 1.4 alanc Exp $
+
+
+$XdotOrg$

@@ -1,0 +1,144 @@
+/*
+ * Copyright (c) 2005 Alexander Gottwald
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE FOR ANY CLAIM, DAMAGES OR
+ * OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ * Except as contained in this notice, the name(s) of the above copyright
+ * holders shall not be used in advertising or otherwise to promote the sale,
+ * use or other dealings in this Software without prior written authorization.
+ */
+
+#define STR_CAPTION_DISPLAY         "Display settings"
+#define STR_MULTIWINDOW             "Multiple windows"
+#define STR_FULLSCREEN              "Fullscreen"
+#define STR_WINDOWED                "One window"
+#define STR_NODECORATION            "One window without titlebar"
+#define STR_DISPLAY_DESC            "Display number"
+
+#define STR_CAPTION_CLIENTS         "Session type"
+#define STR_CLIENT_NONE             "Start no client"
+#define STR_CLIENT_NONE_DESC	    "This will just start Xming. You will be able to start local clients later."
+#define STR_CLIENT		    "Start a program"
+#define STR_CLIENT_DESC		    "This will start a local or remote program which will connect to Xming. You will be able to start local clients later too. Remote programs are started using PuTTY/SSH."
+#define STR_XDMCP		    "Open session via XDMCP"
+#define STR_XDMCP_DESC		    "This will start a remote XDMCP session. Starting local clients later is limited. This option is not available with the ""Multiple windows"" mode."
+
+#define STR_CAPTION_PROGRAM         "Start program"
+#define STR_CLIENT_PROGRAM_DESC     "Start program"
+#define STR_CLIENT_LOCAL            "Run Local"
+#define STR_CLIENT_GROUP            "Run Remote"
+#define STR_CLIENT_REMOTE_PUTTY     "Using PuTTY (plink.exe)"
+#define STR_CLIENT_REMOTE_SSH       "Using SSH (ssh.exe)"
+#define STR_COMPRESS                "With compression"
+#define STR_CLIENT_HOST_DESC        "Connect to computer"
+#define STR_CLIENT_USER_DESC        "Login as user"
+#define STR_CLIENT_PASSWORD_DESC    "Password (leave blank if using PuTTY pageant)"
+
+
+#define STR_CAPTION_XDMCP           "XDMCP settings"
+#define STR_XDMCP_QUERY             "Connect to host"
+#define STR_XDMCP_INDIRECT          "Use indirect connect"
+#define STR_XDMCP_BROADCAST         "Search for hosts (broadcast)"
+#define STR_XDMCP_QUERY_DESC        "Some XDMCP servers must be configured to allow remote connections. Please check the documentation about configuring XDMCP servers."
+
+
+#define STR_CAPTION_CLIPBOARD       "Additional parameters"
+#define STR_CLIPBOARD               "Clipboard"
+#define STR_CLIPBOARD_DESC          "Start the integrated clipboard manager"
+#define STR_NO_ACCESS_CONTROL       "No Access Control"
+#define STR_NO_ACCESS_CONTROL_DESC  "Disable Server Access Control"
+#define STR_EXTRA_PARAMS_DESC       "Additional parameters for Xming"
+#define STR_EXTRA_SSH_DESC          "Additional parameters for PuTTY or SSH"
+#define STR_FONT_SERVER_DESC	    "Remote font server (if any)"
+
+#define STR_CAPTION_FINISH          "Finish configuration"
+#define STR_FINISH_DESC	            "Click Finish to start Xming."
+#define STR_FINISH_SAVE_DESC        "You may also 'Save configuration' for re-use (run automatically or alter via -load option)."
+#define STR_FINISH_SAVE	            "Save configuration"
+#define STR_SAVEPASSWORD            "Include PuTTY Password as insecure clear text"
+
+#define STR_DISPLAY_TITLE           "Select display settings"
+#define STR_DISPLAY_SUBTITLE        "Choose how Xming displays programs."
+#define STR_CLIENTS_TITLE           "Select how to start Xming"
+#define STR_CLIENTS_SUBTITLE        "Choose session type and whether a client is started immediately."
+#define STR_PROGRAM_TITLE           "Enter or choose one X client to Run Local or Run Remote"
+#define STR_PROGRAM_SUBTITLE        "The program chooser can be populated by adding Program1=""a"" to Program10=""j"" to a config.xlaunch file."
+#define STR_XDMCP_TITLE             "Configure a remote XDMCP connection"
+#define STR_XDMCP_SUBTITLE          "Enter or search for a host with a display manager configured to allow a remote X session."
+#define STR_FINISH_TITLE            "Configuration complete"
+#define STR_FINISH_SUBTITLE         "Choose whether to save your settings to an XML file."
+#define STR_CLIPBOARD_TITLE         "Specify parameter settings"
+#define STR_CLIPBOARD_SUBTITLE      "Enter clipboard, remote font server, and all other parameters."
+#define STR_PASSWORD_TITLE          "Re-enter PuTTY Password for this saved configuration"
+#define STR_PASSWORD_SUBTITLE       "This .xlaunch configuration file was saved after a PuTTY Password had been entered. For security the password was not allowed to be stored."
+
+#define STR_SAVE_TITLE              "Save configuration"
+#define STR_SAVE_FILETITLE          "Filename"
+#define STR_SAVE_FILTER             "XLaunch Files (*.xlaunch)%*.xlaunch%%"
+#define STR_FILEPATH_TITLE          "XLaunch Run Remote needs to find this file"
+#define STR_PUTTYPATH_FILTER        "PuTTY File (plink.exe)%plink.exe%%"
+#define STR_SSHPATH_FILTER          "SSH File (ssh.exe)%ssh.exe%%"
+
+STRINGTABLE
+BEGIN
+    IDS_DISPLAY_TITLE       STR_DISPLAY_TITLE       
+    IDS_DISPLAY_SUBTITLE    STR_DISPLAY_SUBTITLE    
+    IDS_CLIENTS_TITLE       STR_CLIENTS_TITLE       
+    IDS_CLIENTS_SUBTITLE    STR_CLIENTS_SUBTITLE    
+    IDS_PROGRAM_TITLE       STR_PROGRAM_TITLE       
+    IDS_PROGRAM_SUBTITLE    STR_PROGRAM_SUBTITLE    
+    IDS_XDMCP_TITLE         STR_XDMCP_TITLE         
+    IDS_XDMCP_SUBTITLE      STR_XDMCP_SUBTITLE      
+    IDS_FINISH_TITLE        STR_FINISH_TITLE      
+    IDS_FINISH_SUBTITLE     STR_FINISH_SUBTITLE   
+    IDS_CLIPBOARD_TITLE     STR_CLIPBOARD_TITLE      
+    IDS_CLIPBOARD_SUBTITLE  STR_CLIPBOARD_SUBTITLE   
+    IDS_PASSWORD_TITLE      STR_PASSWORD_TITLE       
+    IDS_PASSWORD_SUBTITLE   STR_PASSWORD_SUBTITLE    
+    IDS_SAVE_TITLE          STR_SAVE_TITLE
+    IDS_SAVE_FILETITLE      STR_SAVE_FILETITLE
+    IDS_SAVE_FILTER         STR_SAVE_FILTER
+    IDS_FILEPATH_TITLE      STR_FILEPATH_TITLE
+    IDS_PUTTYPATH_FILTER    STR_PUTTYPATH_FILTER
+    IDS_SSHPATH_FILTER      STR_SSHPATH_FILTER
+    IDS_UNKNOWN_OPTION      "XLaunch Error 'Unknown option'"
+    IDS_CANNOT_RUN          "XLaunch Error 'Cannot run .xlaunch file'"
+    IDS_CANNOT_VALIDATE     "XLaunch Error 'Cannot validate .xlaunch file'"
+    IDS_CANNOT_LOAD         "XLaunch Error 'Cannot load .xlaunch file'"
+    IDS_WRONG_OPTIONS       "XLaunch Error 'Wrong options'"
+    IDS_USAGE               "Usage:\nXLaunch\nXLaunch -load 'filename'\nXLaunch -run 'filename'\nXLaunch -validate 'filename'"
+    IDS_PROGRAM_START_FAIL  "XLaunch Error 'Program start failure'"
+    IDS_OPEN_FAIL           "XLaunch Error 'Failed to open server'"
+    IDS_REENTER_PASS        "Re-enter PuTTY Password"
+    IDS_MSXML4_MESS         "XLaunch requires version 6 or 4 MSXML for validation to function correctly."
+    IDS_MSXML4_CAP          "XLaunch Warning 'Cannot validate .xlaunch files without version 6 or 4 MSXML'"
+    IDS_MSXML34_MESS        "XLaunch requires version 6, 4 or 3 MSXML for its configuration file to function."
+    IDS_CANNOT_OPEN         "XLaunch Error 'Cannot open or save .xlaunch file'"
+    IDS_MSXML4_CACHE        "XLaunch requires version 6 or 4 MSXML for its schema cache to function."
+    IDS_SCHEMA_MESS         "XLaunch requires the correct XML schema definition file 'XLaunch.xsd' in the same directory.\nA .xlaunch file will load or save, but no validation can be performed."
+    IDS_SCHEMA_CAP          "XLaunch Warning 'Cannot validate .xlaunch files without the correct schema definition file'"
+    IDS_INVALID_MESS        "File  %s\n        cannot be loaded as it is invalid at...\nLine\t   : %d\nCharacter   : %d\nDescription : %s"
+    IDS_INVALID_CAP         "XLaunch Error 'Invalid .xlaunch file'"
+    IDS_TRY_SAVE_MESS       "File  %s\n%s\nTry 'Save configuration' to repair the .xlaunch file."
+    IDS_TRY_SAVE_CAP        "XLaunch Warning 'Invalid .xlaunch file'"
+    IDS_PASS_ENTRY_MESS     "This .xlaunch configuration file was saved after a PuTTY Password had been entered.\nFor security the password was not stored and so will now have to be entered again.\nClick OK to start XLaunch loaded with all your other saved settings."
+    IDS_PASS_ENTRY_CAP      "XLaunch Warning 'Password Entry Required'"
+    IDS_START_POP_MESS      "The configuration file contains no remote Host to access and/or no Program to run."
+    IDS_START_POP_CAP       "XLaunch Warning 'Nowhere to access or nothing to run'"
+END

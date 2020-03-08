@@ -1,0 +1,5 @@
+XCOMM $XFree86$
+
+InstallDoc(render-protocol,render-protocol.txt)
+
+LinkFile(render-protocol.txt,protocol)

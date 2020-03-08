@@ -1,0 +1,27 @@
+XCOMM $XdotOrg: xc/programs/fonttosfnt/Imakefile,v 1.4 2004/07/21 07:31:10 anholt Exp $
+XCOMM $XFree86: xc/programs/fonttosfnt/Imakefile,v 1.8 2003/11/21 05:22:09 dawes Exp $
+
+#if !HasSetenv
+    SETENV_SRCS = env.c
+    SETENV_OBJS = env.o
+ SETENV_DEFINES = -DNEED_SETENV
+#endif
+
+#if !HasSnprintf
+SNPRINTF_DEFINES  = -DNEED_SNPRINTF
+SNPRINTF_INCLUDES = -I$(LIBSRC)/misc
+#endif
+
+SRCS = fonttosfnt.c read.c write.c struct.c util.c $(SETENV_SRCS)
+
+OBJS = fonttosfnt.o read.o write.o struct.o util.o $(SETENV_OBJS)
+
+FONTENC_INCS = -I$(BUILDINCDIR)
+
+DEFINES  = $(SETENV_DEFINES) $(SNPRINTF_DEFINES) -DXFREE86_FT2 \
+	$(VENDORSUPPORTDEFS) $(VENDOR_DEFINES)
+INCLUDES = $(FONTENC_INCS) $(FREETYPE2INCLUDES) $(SNPRINTF_INCLUDES) -I$(XBUILDINCDIR)
+DEPLIBS = $(DEPFREETYPE2LIB) $(DEPXFONTENCLIB) 
+LOCAL_LIBRARIES = $(FREETYPE2LIB) $(XFONTENCLIB) GzipLibrary MathLibrary
+
+ComplexProgramTarget(fonttosfnt)

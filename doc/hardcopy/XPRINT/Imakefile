@@ -1,0 +1,13 @@
+XCOMM $Xorg: Imakefile,v 1.1 2004/07/19 19:41:53 gisburn Exp $
+
+InstallHardcopyDoc(dtprint_fspec,dtprint_fspec.PS.gz)
+InstallDoc(Xprint_FAQ,Xprint_FAQ.html Xprint_FAQ.txt)
+
+#ifdef HasDocBookTools
+all:: Xprint_FAQ.html Xprint_FAQ.txt
+
+ConvertDocBookToHTML(Xprint_FAQ.xml, Xprint_FAQ.html)
+
+Xprint_FAQ.txt: Xprint_FAQ.html
+	lynx -dump Xprint_FAQ.html | fgrep -v "file://localhost/" >Xprint_FAQ.txt
+#endif /* HasDocBookTools */

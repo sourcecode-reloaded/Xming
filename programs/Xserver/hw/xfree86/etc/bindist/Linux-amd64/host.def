@@ -1,0 +1,13 @@
+/*
+ * Host.def for building Linux/amd64 bindists
+ *
+ * $XFree86$
+ */
+
+#define InstallEmptyHostDef
+#define BuildBindist
+
+#define BuildXF86DRI YES
+
+#define ForceNormalLib YES
+
